@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🧙‍♂️✨ Recetas Mágicas de NATY - Panamá 🇵🇦
 
 Una página web mágica de recetas panameñas con diseño encantador y funcionalidades únicas.
@@ -230,3 +231,6 @@ Esta aplicación combina la tradición culinaria panameña con tecnología moder
 ---
 
 *Desarrollado con ❤️ para la comunidad panameña*
+=======
+# recetas-naty
+>>>>>>> 55296a95080cb92534345b3f0b5d0e5822acc69a
