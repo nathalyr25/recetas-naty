@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recetas Mágicas de NATY - Sabores Panameños</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Fondo mágico con partículas -->
+    <div class="magic-background"></div>
+    
+    <!-- Navegación -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-utensils"></i>
+                <span>Recetas Mágicas NATY</span>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html#inicio" class="nav-link">Inicio</a></li>
+                <li><a href="#recetas" class="nav-link">Recetas</a></li>
+                <li><a href="#lunes" class="nav-link">Lunes</a></li>
+                <li><a href="dia.html?d=martes" class="nav-link">Martes</a></li>
+                <li><a href="dia.html?d=miercoles" class="nav-link">Miércoles</a></li>
+                <li><a href="dia.html?d=jueves" class="nav-link">Jueves</a></li>
+                <li><a href="dia.html?d=viernes" class="nav-link">Viernes</a></li>
+                <li><a href="dia.html?d=sabado" class="nav-link">Sábado</a></li>
+                <li><a href="dia.html?d=domingo" class="nav-link">Domingo</a></li>
+                <li><a href="festividades.html" class="nav-link">Festividades</a></li>
+                <li><a href="saludables.html" class="nav-link">Comida Saludable</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
+                <li><button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="hero-background">
+            <div class="hero-image-1" style="background-image: url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1200&h=800&fit=crop')"></div>
+            <div class="hero-image-2" style="background-image: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=1200&h=800&fit=crop')"></div>
+            <div class="hero-image-3" style="background-image: url('https://images.unsplash.com/photo-1574484284002-952d92456975?w=1200&h=800&fit=crop')"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-pepper-hot"></i>
+                <span>Recetas Auténticas Panameñas</span>
+            </div>
+            <h1 class="hero-title">
+                <span class="magic-text">Recetas Mágicas</span>
+                <br>de Panamá 🇵🇦
+            </h1>
+            <p class="hero-subtitle">
+                Descubre el sabor auténtico de la cocina panameña con un toque de magia culinaria. 
+                Desde Sancocho tradicional hasta Arroz con Mariscos del Caribe.
+            </p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">105+</span>
+                    <span class="stat-label">Recetas Únicas</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">7</span>
+                    <span class="stat-label">Días Completos</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Auténtico</span>
+                </div>
+            </div>
+            <div class="hero-buttons">
+                <button class="btn-primary" id="random-recipe">
+                    <i class="fas fa-random"></i>
+                    Receta Aleatoria
+                </button>
+                <button class="btn-secondary" onclick="scrollToSection('semanal')">
+                    <i class="fas fa-calendar-week"></i>
+                    Ver Plan Semanal
+                </button>
+            </div>
+            <div class="hero-trust">
+                <p>👩‍🍳 Creado con amor por chef panameñas</p>
+            </div>
+        </div>
+        <div class="hero-decoration">
+            <div class="floating-elements">
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    
+
+    
+
+    
+    <section id="recetas" class="recipes-wall">
+        <div class="container">
+            <h2 class="section-title">Plan Semanal de Recetas</h2>
+            <div class="filters-bar">
+                <button class="filter-chip" data-filter="all">Todas</button>
+                <button class="filter-chip" data-filter="desayuno">Desayuno</button>
+                <button class="filter-chip" data-filter="almuerzo">Almuerzo</button>
+                <button class="filter-chip" data-filter="cena">Cena</button>
+                <button class="filter-chip" data-filter="postre">Postre</button>
+            </div>
+            <div class="week-grid">
+                <div class="day-column">
+                    <div class="day-heading">Lunes</div>
+                    <a class="recipe-card-modern" href="dia.html?d=lunes">
+                        <div class="recipe-image-modern" style="background-image:url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80');"></div>
+                        <div class="recipe-body">
+                            <h3 class="recipe-name">Sancocho Panameño</h3>
+                            <span class="see-btn">Ver receta</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="day-column">
+                    <div class="day-heading">Martes</div>
+                    <a class="recipe-card-modern" href="dia.html?d=martes">
+                        <div class="recipe-image-modern" style="background-image:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80');"></div>
+                        <div class="recipe-body">
+                            <h3 class="recipe-name">Arroz con Pollo</h3>
+                            <span class="see-btn">Ver receta</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="day-column">
+                    <div class="day-heading">Miércoles</div>
+                    <a class="recipe-card-modern" href="dia.html?d=miercoles">
+                        <div class="recipe-image-modern" style="background-image:url('https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?w=800&q=80');"></div>
+                        <div class="recipe-body">
+                            <h3 class="recipe-name">Carimañolas</h3>
+                            <span class="see-btn">Ver receta</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="day-column">
+                    <div class="day-heading">Jueves</div>
+                    <a class="recipe-card-modern" href="dia.html?d=jueves">
+                        <div class="recipe-image-modern" style="background-image:url('https://images.unsplash.com/photo-1460306855393-0410f61241c7?w=800&q=80');"></div>
+                        <div class="recipe-body">
+                            <h3 class="recipe-name">Guacho de Mariscos</h3>
+                            <span class="see-btn">Ver receta</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="day-column">
+                    <div class="day-heading">Viernes</div>
+                    <a class="recipe-card-modern" href="dia.html?d=viernes">
+                        <div class="recipe-image-modern" style="background-image:url('https://images.unsplash.com/photo-1604908176997-4313e1d30a45?w=800&q=80');"></div>
+                        <div class="recipe-body">
+                            <h3 class="recipe-name">Ceviche Panameño</h3>
+                            <span class="see-btn">Ver receta</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="day-column">
+                    <div class="day-heading">Sábado</div>
+                    <a class="recipe-card-modern" href="dia.html?d=sabado">
+                        <div class="recipe-image-modern" style="background-image:url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80');"></div>
+                        <div class="recipe-body">
+                            <h3 class="recipe-name">Plato de la Casa</h3>
+                            <span class="see-btn">Ver receta</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="day-column">
+                    <div class="day-heading">Domingo</div>
+                    <a class="recipe-card-modern" href="dia.html?d=domingo">
+                        <div class="recipe-image-modern" style="background-image:url('https://images.unsplash.com/photo-1526318472351-c75fcf070305?w=800&q=80');"></div>
+                        <div class="recipe-body">
+                            <h3 class="recipe-name">Domingo Familiar</h3>
+                            <span class="see-btn">Ver receta</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="lunes" class="day-embed">
+        <div class="container">
+            <h2>Menú del Lunes</h2>
+            <iframe src="recetas/por-dia/lunes/index.html" title="Menú del Lunes" style="width:100%;height:1600px;border:0;"></iframe>
+        </div>
+    </section>
+    <!-- Modal de Receta -->
+    <div class="recipe-modal" id="recipe-modal">
+        <div class="modal-overlay" id="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="recipe-detail" id="recipe-detail">
+                <!-- El contenido de la receta se cargará dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Ruleta -->
+    <div class="roulette-modal" id="roulette-modal">
+        <div class="roulette-overlay" id="roulette-overlay"></div>
+        <div class="roulette-content">
+            <div class="roulette-wheel" id="roulette-wheel">
+                <div class="roulette-pointer"></div>
+                <!-- Las opciones se cargarán dinámicamente -->
+            </div>
+            <button class="roulette-spin" id="roulette-spin">
+                <i class="fas fa-play"></i>
+                Girar Ruleta
+            </button>
+            <button class="roulette-close" id="roulette-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal de Comentarios -->
+    <div class="comments-modal" id="comments-modal">
+        <div class="comments-overlay" id="comments-overlay"></div>
+        <div class="comments-content">
+            <button class="comments-close" id="comments-close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="comments-header">
+                <h3>🍽️ Reseñas Mágicas</h3>
+                <p>Comparte tu experiencia con esta receta</p>
+            </div>
+            <div class="comments-list" id="comments-list">
+                <!-- Los comentarios se cargarán dinámicamente -->
+            </div>
+            <div class="add-comment">
+                <textarea id="new-comment" placeholder="Escribe tu reseña mágica aquí..."></textarea>
+                <div class="comment-actions">
+                    <button class="btn-primary" onclick="addComment()">
+                        <i class="fas fa-paper-plane"></i>
+                        Publicar Reseña
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="contacto" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Contacto</h2>
+            <div class="contact-content">
+                <p>¿Tienes una receta para compartir o una sugerencia? Escríbeme y con gusto te leo.</p>
+                <a class="btn-primary" href="mailto:contacto@naty-recetas.com">
+                    <i class="fas fa-envelope"></i>
+                    Enviar correo
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Recetas Mágicas de NATY</h3>
+                    <p>Descubre la magia de la cocina panameña</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociales</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Recetas Mágicas de NATY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="recipes-database.js"></script>
+    <script src="optimizations.js"></script>
+    <script src="magic-effects.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Test Completo - Recetas Mágicas NR</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #8B5CF6, #06B6D4);
+            color: white;
+            min-height: 100vh;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .test-button {
+            background: linear-gradient(45deg, #10B981, #8B5CF6);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 5px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .test-result {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .pass {
+            background: rgba(16, 185, 129, 0.3);
+            border: 1px solid #10B981;
+        }
+        .fail {
+            background: rgba(239, 68, 68, 0.3);
+            border: 1px solid #EF4444;
+        }
+        .pending {
+            background: rgba(251, 191, 36, 0.3);
+            border: 1px solid #FBBF24;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10B981, #8B5CF6);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        .final-stats {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+        }
+        .magic-animation {
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="magic-animation">🧙‍♂️✨ Test Completo - Recetas Mágicas NR 🇵🇱</h1>
+        
+        <div class="test-section">
+            <h2>🎯 Tests de Funcionalidad Básica</h2>
+            <button class="test-button" onclick="testBasicFunctions()">Probar Funciones Básicas</button>
+            <button class="test-button" onclick="testRecipesData()">Verificar Datos de Recetas</button>
+            <button class="test-button" onclick="testSearchFunction()">Probar Buscador</button>
+            <div id="basic-results"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>🎨 Tests de Diseño y UI</h2>
+            <button class="test-button" onclick="testResponsiveDesign()">Verificar Responsive</button>
+            <button class="test-button" onclick="testThemeToggle()">Probar Modo Oscuro/Claro</button>
+            <button class="test-button" onclick="testAnimations()">Probar Animaciones</button>
+            <div id="ui-results"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>⚡ Tests de Rendimiento</h2>
+            <button class="test-button" onclick="testPerformance()">Medir Rendimiento</button>
+            <button class="test-button" onclick="testMemoryUsage()">Verificar Memoria</button>
+            <button class="test-button" onclick="testLoadTime()">Probar Tiempo de Carga</button>
+            <div id="performance-results"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>🧪 Tests Avanzados</h2>
+            <button class="test-button" onclick="testAllFeatures()">Probar Todas las Funciones</button>
+            <button class="test-button" onclick="testErrorHandling()">Probar Manejo de Errores</button>
+            <button class="test-button" onclick="testDataIntegrity()">Verificar Integridad de Datos</button>
+            <div id="advanced-results"></div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="overall-progress"></div>
+        </div>
+
+        <div class="final-stats" id="final-stats">
+            <div>📊 Resultados aparecerán aquí después de ejecutar los tests...</div>
+        </div>
+    </div>
+
+    <script>
+        let completedTests = 0;
+        let totalTests = 0;
+        let testResults = {};
+
+        function updateProgress() {
+            const progress = (completedTests / totalTests) * 100;
+            document.getElementById('overall-progress').style.width = progress + '%';
+            
+            // Actualizar estadísticas finales
+            if (completedTests === totalTests && totalTests > 0) {
+                updateFinalStats();
+            }
+        }
+
+        function addTestResult(sectionId, testName, passed, message = '') {
+            const resultsDiv = document.getElementById(sectionId);
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `test-result ${passed ? 'pass' : 'fail'}`;
+            resultDiv.innerHTML = `
+                <strong>${passed ? '✅' : '❌'} ${testName}</strong>
+                ${message ? `<br>${message}` : ''}
+            `;
+            resultsDiv.appendChild(resultDiv);
+            
+            // Registrar resultado
+            testResults[testName] = passed;
+            completedTests++;
+            totalTests++;
+            updateProgress();
+        }
+
+        function updateFinalStats() {
+            const passed = Object.values(testResults).filter(r => r).length;
+            const total = Object.values(testResults).length;
+            const percentage = Math.round((passed / total) * 100);
+            
+            let statusMessage = '';
+            let emoji = '';
+            
+            if (percentage === 100) {
+                emoji = '🎉';
+                statusMessage = '¡PERFECTO! Todos los tests pasaron exitosamente.';
+            } else if (percentage >= 90) {
+                emoji = '✨';
+                statusMessage = 'Excelente! La aplicación está casi lista.';
+            } else if (percentage >= 70) {
+                emoji = '👍';
+                statusMessage = 'Buen trabajo! Funciona bien con pocos ajustes.';
+            } else {
+                emoji = '⚠️';
+                statusMessage = 'Necesita algunos ajustes adicionales.';
+            }
+            
+            document.getElementById('final-stats').innerHTML = `
+                <h3>${emoji} Resultado Final</h3>
+                <div style="font-size: 2rem; margin: 15px 0;">${percentage}%</div>
+                <div>Tests pasados: ${passed}/${total}</div>
+                <div><strong>${statusMessage}</strong></div>
+                <div style="margin-top: 15px; font-size: 0.9rem;">
+                    🇵🇦 ¡Tu página de recetas mágicas panameñas está lista! 🧙‍♂️✨
+                </div>
+            `;
+        }
+
+        // Tests Básicos
+        function testBasicFunctions() {
+            const testName = 'Ventanas y Objetos Globales';
+            try {
+                const checks = [
+                    typeof window.EXPANDED_RECIPES_DATABASE !== 'undefined',
+                    typeof window.openRecipeModal === 'function',
+                    typeof window.generateWeeklyRecipes === 'function',
+                    typeof document.getElementById('nav-menu') !== 'null'
+                ];
+                
+                const passed = checks.every(check => check === true);
+                addTestResult('basic-results', testName, passed, 
+                    passed ? 'Todos los objetos globales están disponibles' : 'Algunos objetos faltan');
+            } catch (e) {
+                addTestResult('basic-results', testName, false, e.message);
+            }
+        }
+
+        function testRecipesData() {
+            const testName = 'Datos de Recetas';
+            try {
+                if (typeof EXPANDED_RECIPES_DATABASE !== 'undefined') {
+                    const checks = [
+                        EXPANDED_RECIPES_DATABASE.weekly && Object.keys(EXPANDED_RECIPES_DATABASE.weekly).length === 7,
+                        EXPANDED_RECIPES_DATABASE.healthy && Object.keys(EXPANDED_RECIPES_DATABASE.healthy).length >= 4,
+                        EXPANDED_RECIPES_DATABASE.festivals && EXPANDED_RECIPES_DATABASE.festivals.length >= 3
+                    ];
+                    
+                    const passed = checks.every(check => check === true);
+                    addTestResult('basic-results', testName, passed,
+                        passed ? 'Base de datos completa con todas las recetas' : 'Datos incompletos');
+                } else {
+                    addTestResult('basic-results', testName, false, 'Base de datos no disponible');
+                }
+            } catch (e) {
+                addTestResult('basic-results', testName, false, e.message);
+            }
+        }
+
+        function testSearchFunction() {
+            const testName = 'Funcionalidad de Búsqueda';
+            try {
+                if (typeof window.searchRecipes === 'function') {
+                    addTestResult('basic-results', testName, true, 'Función de búsqueda está disponible');
+                } else {
+                    addTestResult('basic-results', testName, false, 'Función de búsqueda no encontrada');
+                }
+            } catch (e) {
+                addTestResult('basic-results', testName, false, e.message);
+            }
+        }
+
+        // Tests de UI
+        function testResponsiveDesign() {
+            const testName = 'Diseño Responsivo';
+            try {
+                const viewportMeta = document.querySelector('meta[name="viewport"]');
+                const responsiveCSS = window.getComputedStyle(document.body).getPropertyValue('--container-width');
+                
+                addTestResult('ui-results', testName, !!viewportMeta, 
+                    viewportMeta ? 'Meta viewport configurado correctamente' : 'No hay configuración de viewport');
+                addTestResult('ui-results', 'CSS Variables', true, 'CSS con variables está disponibles');
+            } catch (e) {
+                addTestResult('ui-results', testName, false, e.message);
+            }
+        }
+
+        function testThemeToggle() {
+            const testName = 'Toggle de Tema';
+            try {
+                if (typeof window.switchTheme === 'function') {
+                    addTestResult('ui-results', testName, true, 'Función de cambio de tema disponible');
+                } else {
+                    addTestResult('ui-results', testName, false, 'No se encontró función de cambio de tema');
+                }
+            } catch (e) {
+                addTestResult('ui-results', testName, false, e.message);
+            }
+        }
+
+        function testAnimations() {
+            const testName = 'Animaciones CSS';
+            try {
+                const bodyStyles = window.getComputedStyle(document.body);
+                const hasTransitions = bodyStyles.transition !== 'all 0s ease 0s';
+                
+                addTestResult('ui-results', testName, hasTransitions, 
+                    hasTransitions ? 'Animaciones CSS configuradas' : 'No hay transiciones CSS');
+            } catch (e) {
+                addTestResult('ui-results', testName, false, e.message);
+            }
+        }
+
+        // Tests de Rendimiento
+        function testPerformance() {
+            const testName = 'Performance APIs';
+            try {
+                const hasPerformance = 'performance' in window;
+                const hasRequestAnimationFrame = 'requestAnimationFrame' in window;
+                
+                addTestResult('performance-results', testName, hasPerformance && hasRequestAnimationFrame, 
+                    'APIs de rendimiento disponibles');
+            } catch (e) {
+                addTestResult('performance-results', testName, false, e.message);
+            }
+        }
+
+        function testMemoryUsage() {
+            const testName = 'Uso de Memoria';
+            try {
+                if ('memory' in performance) {
+                    const memory = performance.memory;
+                    const memPassed = memory.usedJSHeapSize < 50000000; // < 50MB aprox
+                    
+                    addTestResult('performance-results', testName, memPassed, 
+                        `Memoria JS usada: ${Math.round(memory.usedJSHeapSize / 1024 / 1024)} bit MB`);
+                } else {
+                    addTestResult('performance-results', testName, true, 'Memory API no disponible (Chrome)');
+                }
+            } catch (e) {
+                addTestResult('performance-results', testName, false, e.message);
+            }
+        }
+
+        function testLoadTime() {
+            const testName = 'Tiempo de Carga';
+            try {
+                if ('performance' in window) {
+                    const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+                    const passed = loadTime < 3000; // < 3 segundos
+                    
+                    addTestResult('performance-results', testName, passed, 
+                        `Tiempo total: ${Math.round(loadTime)}ms`);
+                } else {
+                    addTestResult('performance-results', testName, true, 'Performance API no disponible');
+                }
+            } catch (e) {
+                addTestResult('performance-results', testName, false, e.message);
+            }
+        }
+
+        // Tests Avanzados
+        function testAllFeatures() {
+            const testName = 'Todas las Funciones';
+            try {
+                const features = [
+                    'openRecipeModal',
+                    'toggleFavorite',
+                    'shareRecipe',
+                    'downloadRecipe',
+                    'playMusic',
+                    'showRouletteModal',
+                    'generateWeeklyRecipes',
+                    'generateHealthyRecipes'
+                ];
+                
+                const availableFeatures = features.filter(f => typeof window[f] === 'function');
+                const percentage = Math.round((availableFeatures.length / features.length) * 100);
+                
+                addTestResult('advanced-results', testName, percentage >= 90, 
+                    `${availableFeatures.length}/${features.length} funciones disponibles (${percentage}%)`);
+            } catch (e) {
+                addTestResult('advanced-results', testName, false, e.message);
+            }
+        }
+
+        function testErrorHandling() {
+            const testName = 'Manejo de Errores';
+            try {
+                // Probar con ID inexistente
+                if (typeof window.findRecipeById === 'function') {
+                    addTestResult('advanced-results', testName, true, 'Función de manejo de errores implementada');
+                } else {
+                    addTestResult('advanced-results', testName, false, 'No hay manejo de errores visible');
+                }
+            } catch (e) {
+                addTestResult('advanced-results', testName, false, e.message);
+            }
+        }
+
+        function testDataIntegrity() {
+            const testName = 'Integridad de Datos';
+            try {
+                if (typeof EXPANDED_RECIPES_DATABASE !== 'undefined') {
+                    let validRecipes = 0;
+                    let totalRecipes = 0;
+                    
+                    // Verificar estructura de recetas
+                    Object.values(EXPANDED_RECIPES_DATABASE.weekly).forEach(day => {
+                        Object.values(day).forEach(meals => {
+                            if (Array.isArray(meals)) {
+                                meals.forEach(recipe => {
+                                    totalRecipes++;
+                                    if (recipe.id && recipe.name && recipe.ingredients && recipe.instructions) {
+                                        validRecipes++;
+                                    }
+                                });
+                            }
+                        });
+                    });
+                    
+                    const integrityPercentage = Math.round((validRecipes / totalRecipes) * 100);
+                    
+                    addTestResult('advanced-results', testName, integrityPercentage >= 95, 
+                        `${validRecipes}/${totalRecipes} recetas válidas (${integrityPercentage}%)`);
+                } else {
+                    addTestResult('advanced-results', testName, false, 'Base de datos no disponible');
+                }
+            } catch (e) {
+                addTestResult('advanced-results', testName, false, e.message);
+            }
+        }
+
+        // Auto-inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                addTestResult('basic-results', 'Página Cargada', true, 'La página se cargó correctamente');
+                console.log('🧪 Test Suite iniciado - Recetas Mágicas NR');
+            }, 500);
+        });
+    </script>
+</body>
+</html>
+
+

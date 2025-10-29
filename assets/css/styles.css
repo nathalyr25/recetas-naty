@@ -1,0 +1,57 @@
+html,body{height:100%}
+body{font-family:system-ui,Segoe UI,Arial,sans-serif;margin:0;line-height:1.7;color:#111;background:#fff}
+
+main, .container{max-width:960px;margin:0 auto;padding:24px}
+
+h1{font-size:2rem;margin:16px 0 8px;color:#0a0a0a}
+h2{font-size:1.5rem;margin:20px 0 10px;color:#0a0a0a}
+h3{font-size:1.1rem;margin:14px 0 8px;color:#222}
+h4{font-size:1rem;margin:10px 0 6px;color:#333}
+
+p,li{font-size:1rem}
+ul,ol{padding-left:22px}
+section{margin:22px 0;padding:16px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa}
+
+a{color:#0b5ed7;text-decoration:none}
+a:hover{color:#084298;text-decoration:underline}
+
+/* simple top bar for subpages if desired */
+.topbar{background:#111;color:#fff;padding:10px 16px}
+.topbar a{color:#fff;margin-right:12px}
+
+/* buttons */
+.btn{display:inline-block;padding:10px 14px;border-radius:8px;border:1px solid #0b5ed7;background:#0b5ed7;color:#fff}
+.btn:hover{background:#094fb1;border-color:#094fb1}
+
+/* recipe images in daily pages */
+section img{
+  display:block;
+  width:100% !important;
+  max-width:320px !important;
+  height:auto !important;
+  margin:12px auto 10px;
+  border-radius:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+/* minor readability tweaks */
+section ul{margin-top:8px}
+section ol{margin-top:8px}
+section h3{margin-top:10px}
+
+/* vibrant section colors to avoid a plain look */
+section{border-left:6px solid #e5e7eb}
+section:nth-of-type(1){background:#ffe4c7;border-color:#ffb169}
+section:nth-of-type(1) h2{color:#b45309}
+
+section:nth-of-type(2){background:#c7f9ff;border-color:#22d3ee}
+section:nth-of-type(2) h2{color:#0e7490}
+
+section:nth-of-type(3){background:#dbeafe;border-color:#60a5fa}
+section:nth-of-type(3) h2{color:#1d4ed8}
+
+section:nth-of-type(4){background:#dcfce7;border-color:#4ade80}
+section:nth-of-type(4) h2{color:#15803d}
+
+section:nth-of-type(5){background:#fee2e2;border-color:#fca5a5}
+section:nth-of-type(5) h2{color:#b91c1c}

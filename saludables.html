@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comida Saludable</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <i class="fas fa-utensils"></i>
+        <span>Recetas Mágicas NATY</span>
+      </div>
+      <ul class="nav-menu">
+        <li><a class="nav-link" href="index.html#inicio">Inicio</a></li>
+        <li><a class="nav-link" href="dia.html?d=lunes">Lunes</a></li>
+        <li><a class="nav-link" href="dia.html?d=martes">Martes</a></li>
+        <li><a class="nav-link" href="dia.html?d=miercoles">Miércoles</a></li>
+        <li><a class="nav-link" href="dia.html?d=jueves">Jueves</a></li>
+        <li><a class="nav-link" href="dia.html?d=viernes">Viernes</a></li>
+        <li><a class="nav-link" href="dia.html?d=sabado">Sábado</a></li>
+        <li><a class="nav-link" href="dia.html?d=domingo">Domingo</a></li>
+        <li><a class="nav-link" href="festividades.html">Festividades</a></li>
+        <li><a class="nav-link" href="saludables.html">Comida Saludable</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section id="saludables" class="healthy-recipes">
+    <div class="container">
+      <h2 class="section-title">
+        <i class="fas fa-seedling"></i>
+        Comida Saludable
+      </h2>
+      <div class="healthy-filters">
+        <button class="healthy-filter active" data-type="all">Todas</button>
+        <button class="healthy-filter" data-type="veganas">Veganas</button>
+        <button class="healthy-filter" data-type="sin-gluten">Sin Gluten</button>
+        <button class="healthy-filter" data-type="bajo-carbohidratos">Bajo Carbohidratos</button>
+        <button class="healthy-filter" data-type="proteico">Alto en Proteína</button>
+      </div>
+      <div class="healthy-grid" id="healthy-grid"></div>
+    </div>
+  </section>
+
+  <div class="recipe-modal" id="recipe-modal">
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+      <div class="recipe-detail" id="recipe-detail"></div>
+    </div>
+  </div>
+
+  <script src="recipes-database.js"></script>
+  <script src="optimizations.js"></script>
+  <script src="magic-effects.js"></script>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      generateHealthyRecipes('all');
+      const modalClose = document.getElementById('modal-close');
+      const modalOverlay = document.getElementById('modal-overlay');
+      if (modalClose) modalClose.addEventListener('click', closeRecipeModal);
+      if (modalOverlay) modalOverlay.addEventListener('click', closeRecipeModal);
+    });
+  </script>
+</body>
+</html>
