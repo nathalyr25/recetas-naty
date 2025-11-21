@@ -25,21 +25,11 @@
                 <span></span>
             </div>
             <ul class="nav-menu" id="nav-menu">
-                <li><a href="index.html#inicio" class="nav-link">Inicio</a></li>
-                <li><a href="#recetas" class="nav-link">Recetas</a></li>
-                <li><a href="#lunes" class="nav-link">Lunes</a></li>
-                <li><a href="dia.html?d=martes" class="nav-link">Martes</a></li>
-                <li><a href="dia.html?d=miercoles" class="nav-link">Miércoles</a></li>
-                <li><a href="dia.html?d=jueves" class="nav-link">Jueves</a></li>
-                <li><a href="dia.html?d=viernes" class="nav-link">Viernes</a></li>
-                <li><a href="dia.html?d=sabado" class="nav-link">Sábado</a></li>
-                <li><a href="dia.html?d=domingo" class="nav-link">Domingo</a></li>
-                <li><a href="festividades.html" class="nav-link">Festividades</a></li>
-                <li><a href="saludables.html" class="nav-link">Comida Saludable</a></li>
-                <li><a href="#contacto" class="nav-link">Contacto</a></li>
-                <li><button class="theme-toggle" id="theme-toggle">
-                    <i class="fas fa-moon"></i>
-                </button></li>
+                <li>
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
             </ul>
         </div>
     </nav>
@@ -83,7 +73,7 @@
                     <i class="fas fa-random"></i>
                     Receta Aleatoria
                 </button>
-                <button class="btn-secondary" onclick="scrollToSection('semanal')">
+                <button class="btn-secondary" onclick="scrollToSection('recetas')">
                     <i class="fas fa-calendar-week"></i>
                     Ver Plan Semanal
                 </button>
@@ -114,94 +104,1194 @@
     <section id="recetas" class="recipes-wall">
         <div class="container">
             <h2 class="section-title">Plan Semanal de Recetas</h2>
-            <div class="filters-bar">
-                <button class="filter-chip" data-filter="all">Todas</button>
-                <button class="filter-chip" data-filter="desayuno">Desayuno</button>
-                <button class="filter-chip" data-filter="almuerzo">Almuerzo</button>
-                <button class="filter-chip" data-filter="cena">Cena</button>
-                <button class="filter-chip" data-filter="postre">Postre</button>
-            </div>
-            <div class="week-grid">
+            <div class="carousel-wrapper">
+                <button class="carousel-arrow carousel-arrow-left" id="carousel-arrow-left" aria-label="Anterior">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="week-grid" id="week-grid">
                 <div class="day-column">
                     <div class="day-heading">Lunes</div>
-                    <a class="recipe-card-modern" href="dia.html?d=lunes">
-                        <div class="recipe-image-modern" style="background-image:url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80');"></div>
+                    <a class="recipe-card-modern" href="#lunes-recetas" onclick="toggleDaySection('lunes'); return false;">
+                        <div class="recipe-image-modern" style="background-image:url('https://viajerocasual.com/wp-content/uploads/2022/05/comidas-tipicas-de-panama-sancocho-de-gallina.jpg');"></div>
                         <div class="recipe-body">
                             <h3 class="recipe-name">Sancocho Panameño</h3>
-                            <span class="see-btn">Ver receta</span>
+                            <span class="see-btn">Ver recetas</span>
                         </div>
                     </a>
                 </div>
                 <div class="day-column">
                     <div class="day-heading">Martes</div>
-                    <a class="recipe-card-modern" href="dia.html?d=martes">
-                        <div class="recipe-image-modern" style="background-image:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80');"></div>
+                    <a class="recipe-card-modern" href="#martes-recetas" onclick="toggleDaySection('martes'); return false;">
+                        <div class="recipe-image-modern" style="background-image:url('https://viajerocasual.com/wp-content/uploads/2022/05/comidas-tipicas-de-panama-ropa-vieja.jpg');"></div>
                         <div class="recipe-body">
                             <h3 class="recipe-name">Arroz con Pollo</h3>
-                            <span class="see-btn">Ver receta</span>
+                            <span class="see-btn">Ver recetas</span>
                         </div>
                     </a>
                 </div>
                 <div class="day-column">
                     <div class="day-heading">Miércoles</div>
-                    <a class="recipe-card-modern" href="dia.html?d=miercoles">
-                        <div class="recipe-image-modern" style="background-image:url('https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?w=800&q=80');"></div>
+                    <a class="recipe-card-modern" href="#miercoles-recetas" onclick="toggleDaySection('miercoles'); return false;">
+                        <div class="recipe-image-modern" style="background-image:url('https://i.pinimg.com/736x/59/52/32/5952328302450e60a4cbff09c50c3c2b.jpg');"></div>
                         <div class="recipe-body">
                             <h3 class="recipe-name">Carimañolas</h3>
-                            <span class="see-btn">Ver receta</span>
+                            <span class="see-btn">Ver recetas</span>
                         </div>
                     </a>
                 </div>
                 <div class="day-column">
                     <div class="day-heading">Jueves</div>
-                    <a class="recipe-card-modern" href="dia.html?d=jueves">
-                        <div class="recipe-image-modern" style="background-image:url('https://images.unsplash.com/photo-1460306855393-0410f61241c7?w=800&q=80');"></div>
+                    <a class="recipe-card-modern" href="#jueves-recetas" onclick="toggleDaySection('jueves'); return false;">
+                        <div class="recipe-image-modern" style="background-image:url('https://blog.gotuuri.com/wp-content/uploads/2024/01/Nota-3-3.webp');"></div>
                         <div class="recipe-body">
                             <h3 class="recipe-name">Guacho de Mariscos</h3>
-                            <span class="see-btn">Ver receta</span>
+                            <span class="see-btn">Ver recetas</span>
                         </div>
                     </a>
                 </div>
                 <div class="day-column">
                     <div class="day-heading">Viernes</div>
-                    <a class="recipe-card-modern" href="dia.html?d=viernes">
-                        <div class="recipe-image-modern" style="background-image:url('https://images.unsplash.com/photo-1604908176997-4313e1d30a45?w=800&q=80');"></div>
+                    <a class="recipe-card-modern" href="#viernes-recetas" onclick="toggleDaySection('viernes'); return false;">
+                        <div class="recipe-image-modern" style="background-image:url('https://viajerocasual.com/wp-content/uploads/2022/05/comidas-tipicas-de-panama-ceviche.jpg');"></div>
                         <div class="recipe-body">
                             <h3 class="recipe-name">Ceviche Panameño</h3>
-                            <span class="see-btn">Ver receta</span>
+                            <span class="see-btn">Ver recetas</span>
                         </div>
                     </a>
                 </div>
                 <div class="day-column">
                     <div class="day-heading">Sábado</div>
-                    <a class="recipe-card-modern" href="dia.html?d=sabado">
-                        <div class="recipe-image-modern" style="background-image:url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80');"></div>
+                    <a class="recipe-card-modern" href="#sabado-recetas" onclick="toggleDaySection('sabado'); return false;">
+                        <div class="recipe-image-modern" style="background-image:url('https://tse2.mm.bing.net/th/id/OIP.P2wbnc300-zi_zfwvaTwiwHaE6?pid=Api&P=0&h=180');"></div>
                         <div class="recipe-body">
                             <h3 class="recipe-name">Plato de la Casa</h3>
-                            <span class="see-btn">Ver receta</span>
+                            <span class="see-btn">Ver recetas</span>
                         </div>
                     </a>
                 </div>
                 <div class="day-column">
                     <div class="day-heading">Domingo</div>
-                    <a class="recipe-card-modern" href="dia.html?d=domingo">
-                        <div class="recipe-image-modern" style="background-image:url('https://images.unsplash.com/photo-1526318472351-c75fcf070305?w=800&q=80');"></div>
+                    <a class="recipe-card-modern" href="#domingo-recetas" onclick="toggleDaySection('domingo'); return false;">
+                        <div class="recipe-image-modern" style="background-image:url('https://viajerocasual.com/wp-content/uploads/2022/05/comidas-tipicas-de-panama-patacones.jpg');"></div>
                         <div class="recipe-body">
                             <h3 class="recipe-name">Domingo Familiar</h3>
-                            <span class="see-btn">Ver receta</span>
+                            <span class="see-btn">Ver recetas</span>
                         </div>
                     </a>
+                </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-right" id="carousel-arrow-right" aria-label="Siguiente">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Secciones de Recetas por Día -->
+    <section id="lunes-recetas" class="day-recipes-section" style="display: none;">
+        <div class="container">
+            <div class="day-recipes-header">
+                <h2 class="day-recipes-title">🍽️ Recetas del Lunes</h2>
+                <button class="close-day-section" onclick="toggleDaySection('lunes')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="day-recipes-content">
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Lunes – Sancocho Panameño</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>1 pollo entero troceado</li>
+                                <li>1 cebolla picada</li>
+                                <li>2 dientes de ajo machacados</li>
+                                <li>1 tallo de culantro</li>
+                                <li>1 ñame pelado y picado</li>
+                                <li>2 mazorcas de maíz troceadas</li>
+                                <li>Sal y pimienta</li>
+                                <li>Agua suficiente</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>En una olla grande, agrega el pollo, cebolla, ajo y culantro.</li>
+                                <li>Cubre con agua y cocina 20 minutos.</li>
+                                <li>Añade el ñame y la mazorca.</li>
+                                <li>Cocina hasta que el ñame esté suave.</li>
+                                <li>Sazona con sal y pimienta.</li>
+                                <li>Sirve caliente con arroz blanco.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Lunes – receta 2: Hojaldres con Salchicha Guisada</h3>
+                    <p class="recipe-description">⏱️ Súper rápido y clásico - 15 minutos</p>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Masa de hojaldre (puede ser comprada o casera)</li>
+                                <li>4-6 salchichas</li>
+                                <li>1 cebolla picada</li>
+                                <li>2 dientes de ajo picados</li>
+                                <li>2 cucharadas de salsa de tomate</li>
+                                <li>Aceite para freír</li>
+                                <li>Sal y pimienta al gusto</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Estira la masa de hojaldre y fríela en aceite caliente hasta que esté dorada y crujiente. Escurrir y reservar.</li>
+                                <li>Aparte, corta las salchichas en rodajas o trozos pequeños.</li>
+                                <li>En una sartén, saltea las salchichas picadas con cebolla y ajo hasta que la cebolla esté transparente.</li>
+                                <li>Añade un chorrito de salsa de tomate y sazona con sal y pimienta. Cocina unos minutos más.</li>
+                                <li>Sirve las hojaldres calientes con la salchicha guisada encima o al lado.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Lunes – receta 3: Arroz con Atún al Estilo Panameño</h3>
+                    <p class="recipe-description">⏱️ Rápido, fresco y barato - 10-12 min si ya hay arroz hecho</p>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>2-3 tazas de arroz blanco del día anterior (o recién hecho)</li>
+                                <li>1 lata de atún en agua o aceite</li>
+                                <li>1 cebolla pequeña picada</li>
+                                <li>Culantro fresco picado</li>
+                                <li>2-3 cucharadas de mayonesa</li>
+                                <li>1 limón (jugo)</li>
+                                <li>Sal y pimienta al gusto</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Si el arroz está frío, caliéntalo ligeramente en el microondas o en una sartén.</li>
+                                <li>Escurre el atún si está en agua o aceite, según tu preferencia.</li>
+                                <li>En un bol grande, mezcla el arroz con el atún desmenuzado.</li>
+                                <li>Añade la cebolla picada, culantro fresco y mayonesa. Mezcla bien.</li>
+                                <li>Agrega el jugo de limón y ajusta con sal y pimienta al gusto.</li>
+                                <li>Sirve frío o a temperatura ambiente como plato rápido y refrescante.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Lunes – receta 4: Tortillas de Maíz con Huevo y Queso</h3>
+                    <p class="recipe-description">⏱️ Full desayuno/almuerzo express panameño - 10 minutos</p>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>4-6 tortillas de maíz (ya hechas o compradas)</li>
+                                <li>4 huevos</li>
+                                <li>Queso blanco panameño rallado o tajado</li>
+                                <li>Aceite para freír</li>
+                                <li>Sal y pimienta al gusto</li>
+                                <li>Culantro fresco (opcional)</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Calienta las tortillas de maíz en una sartén con un poco de aceite hasta que estén ligeramente doradas y crujientes.</li>
+                                <li>Mientras tanto, prepara los huevos: puedes hacerlos fritos o revueltos según tu preferencia.</li>
+                                <li>Para huevos fritos: fríelos en aceite caliente hasta que la yema esté al punto deseado.</li>
+                                <li>Para huevos revueltos: bátelos, sazona con sal y pimienta, y cocínalos en una sartén con un poco de aceite.</li>
+                                <li>Coloca los huevos sobre las tortillas calientes.</li>
+                                <li>Añade queso blanco rallado o tajado encima de los huevos.</li>
+                                <li>Si deseas, espolvorea con culantro fresco picado.</li>
+                                <li>Sirve inmediatamente caliente.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Lunes – receta 5: Pollo Salteado con Salsa Negra</h3>
+                    <p class="recipe-description">⏱️ Estilo fonda y súper rápido - 15 minutos</p>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>2 pechugas de pollo (o 500g de pollo en tiras)</li>
+                                <li>2 dientes de ajo picados</li>
+                                <li>1 cebolla cortada en plumas</li>
+                                <li>2 cucharadas de salsa inglesa (Worcestershire)</li>
+                                <li>2 cucharadas de salsa china (salsa de soja)</li>
+                                <li>Culantro fresco picado</li>
+                                <li>Aceite para saltear</li>
+                                <li>Sal y pimienta al gusto</li>
+                                <li>Arroz blanco caliente para acompañar</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Corta las pechugas de pollo en tiras finas o cubos pequeños.</li>
+                                <li>Sazona el pollo con sal y pimienta.</li>
+                                <li>En una sartén grande y caliente con aceite, saltea el ajo y la cebolla hasta que la cebolla esté transparente.</li>
+                                <li>Agrega las tiras de pollo y cocina a fuego alto hasta que se doren y estén cocidas (aproximadamente 5-7 minutos).</li>
+                                <li>Añade un chorrito de salsa inglesa y salsa china, mezclando bien para que el pollo se impregne de los sabores.</li>
+                                <li>Cocina un minuto más para que las salsas se integren.</li>
+                                <li>Agrega el culantro fresco picado al final y retira del fuego.</li>
+                                <li>Sirve inmediatamente con arroz blanco caliente.</li>
+                            </ol>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="lunes" class="day-embed">
+    <section id="martes-recetas" class="day-recipes-section" style="display: none;">
         <div class="container">
-            <h2>Menú del Lunes</h2>
-            <iframe src="recetas/por-dia/lunes/index.html" title="Menú del Lunes" style="width:100%;height:1600px;border:0;"></iframe>
+            <div class="day-recipes-header">
+                <h2 class="day-recipes-title">🍽️ Recetas del Martes</h2>
+                <button class="close-day-section" onclick="toggleDaySection('martes')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="day-recipes-content">
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Martes – receta 1: Guacho de rabito (o guacho de carne)</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>1 kg de carne de costilla de res o rabito (o mezcla de carne de res)</li>
+                                <li>2 tazas de arroz</li>
+                                <li>1 cebolla picada</li>
+                                <li>1 diente de ajo</li>
+                                <li>1 pimiento picado</li>
+                                <li>Culantro</li>
+                                <li>Verduras al gusto (yuca, ñame, zanahoria)</li>
+                                <li>Sal, pimienta, comino</li>
+                                <li>Agua o caldo</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Cocinar la carne hasta que esté tierna, reservar caldo.</li>
+                                <li>En una olla, sofreír cebolla, ajo, pimiento, añadir las verduras.</li>
+                                <li>Agregar el arroz y mezclar con el sofrito.</li>
+                                <li>Verter caldo o agua suficiente (incluyendo el de la cocción) para que el arroz se cueza.</li>
+                                <li>Sazonar con culantro, sal, pimienta, comino.</li>
+                                <li>Cocinar tapado hasta que el arroz esté hecho.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Martes – receta 2: Mondongo a la culona</h3>
+                    <p class="recipe-description">El mondongo a la culona es un guiso típico panameño, especialmente en la cocina criolla.</p>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Mondongo (tripas de res) limpio</li>
+                                <li>1 cebolla</li>
+                                <li>2 dientes de ajo</li>
+                                <li>1 pimiento</li>
+                                <li>Tomate</li>
+                                <li>Culantro</li>
+                                <li>Comino, sal, pimienta</li>
+                                <li>Aceite</li>
+                                <li>Agua o caldo</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Limpiar muy bien el mondongo, cortarlo en trozos pequeños y hervirlo hasta que esté blando.</li>
+                                <li>En otra olla, sofreír cebolla, ajo, pimiento y tomate.</li>
+                                <li>Añadir el mondongo cocido, mezclar con el sofrito.</li>
+                                <li>Verter algo de caldo para que no quede seco. Agregar culantro, sal, comino, pimienta.</li>
+                                <li>Cocinar a fuego lento unos minutos para que los sabores se integren.</li>
+                                <li>Servir caliente con arroz blanco y patacones.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Martes – receta 3: Ropa vieja panameña</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>1 kg de carne de falda o res para desmenuzar</li>
+                                <li>1 cebolla en plumas</li>
+                                <li>1 pimiento en tiras</li>
+                                <li>2 dientes de ajo</li>
+                                <li>2 tomates picados</li>
+                                <li>2 cucharadas de pasta de tomate</li>
+                                <li>Culantro picado</li>
+                                <li>Sal, pimienta, comino, orégano</li>
+                                <li>Aceite</li>
+                                <li>Caldo o agua</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Cocer la carne en agua con sal hasta que esté blanda. Escurrir y desmenuzar.</li>
+                                <li>En una sartén con aceite, sofreír ajo, cebolla y pimiento.</li>
+                                <li>Agregar el tomate y la pasta de tomate, cocinar unos minutos.</li>
+                                <li>Incorporar la carne desmenuzada, sazonar con comino, orégano, sal y pimienta.</li>
+                                <li>Añadir un poco de caldo para que no quede seco. Cocinar a fuego bajo ~10‑15 minutos.</li>
+                                <li>Al final agregar culantro fresco picado. Servir con arroz blanco.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Martes – receta 4: Tamales panameños</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Maíz pilado (masa de maíz)</li>
+                                <li>Gallina o pollo cocido</li>
+                                <li>Ajo, cebolla, ají, culantro</li>
+                                <li>Tomate, pasta de tomate</li>
+                                <li>Pasas, alcaparras, aceitunas</li>
+                                <li>Guisantes verdes (chícharos)</li>
+                                <li>Hojas de plátano (o bijao), pabilo</li>
+                                <li>Sal, pimienta, comino</li>
+                                <li>Agua</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Cocer el maíz pilado hasta que esté blando. Escurrir y reservar.</li>
+                                <li>En una sartén, sofreír ajo, cebolla, ají, tomate y culantro. Añadir la carne, sazonar con sal, pimienta, comino.</li>
+                                <li>Agregar tomate, pasta de tomate, agua y cocinar.</li>
+                                <li>Añadir pasas, alcaparras, aceitunas y guisantes, cocinar unos minutos.</li>
+                                <li>Mezclar parte del caldo con la masa de maíz para que se humedezca bien.</li>
+                                <li>Lavar las hojas de plátano, escaldarlas en agua caliente para suavizarlas.</li>
+                                <li>En cada hoja, colocar una porción de masa, luego el relleno, cubrir con más masa, envolver y atar con pabilo.</li>
+                                <li>Cocinar los tamales en agua hirviendo (olla grande) durante ~1 hora. Sacar y servir.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Martes – receta 5: Hojaldre con queso (panameño)</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Masa de hojaldre (puede ser comprada o casera)</li>
+                                <li>Queso blanco panameño o queso fresco</li>
+                                <li>Huevo batido (para barnizar)</li>
+                                <li>Azúcar (opcional, si lo haces dulce)</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Precalentar el horno.</li>
+                                <li>Cortar la masa de hojaldre en rectángulos o formas deseadas.</li>
+                                <li>Colocar queso en el centro, cerrar formando un sobre o empanada.</li>
+                                <li>Barnizar con huevo batido.</li>
+                                <li>Si lo vas a hacer dulce, espolvorear un poco de azúcar.</li>
+                                <li>Hornear hasta que la masa esté dorada. Servir caliente.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
+
+    <section id="miercoles-recetas" class="day-recipes-section" style="display: none;">
+        <div class="container">
+            <div class="day-recipes-header">
+                <h2 class="day-recipes-title">🍽️ Recetas del Miércoles</h2>
+                <button class="close-day-section" onclick="toggleDaySection('miercoles')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="day-recipes-content">
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Miércoles – receta 1: Arroz con coco y guandú</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>2 tazas de arroz</li>
+                                <li>1 lata de leche de coco</li>
+                                <li>Guandú (frijol de palo) cocido</li>
+                                <li>1 cebolla picada</li>
+                                <li>1 diente de ajo picado</li>
+                                <li>Aceite</li>
+                                <li>Sal</li>
+                                <li>Agua</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>En una olla, sofreír cebolla y ajo en aceite hasta que estén transparentes.</li>
+                                <li>Agregar el guandú cocido y mezclar.</li>
+                                <li>Añadir el arroz, mezclar para que se impregne del sofrito.</li>
+                                <li>Verter la leche de coco y completar con agua hasta alcanzar la cantidad de líquido necesaria para cocinar el arroz.</li>
+                                <li>Ajustar sal. Tapar y cocinar a fuego bajo hasta que el arroz esté listo y el líquido absorbido.</li>
+                                <li>Dejar reposar unos minutos y servir.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Miércoles – receta 2: Ceviche panameño</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Pescado blanco fresco (o combinación: camarón, almejas)</li>
+                                <li>Limones o lima (jugo)</li>
+                                <li>Vinagre (opcional)</li>
+                                <li>Cebolla roja finamente picada</li>
+                                <li>Culantro fresco picado</li>
+                                <li>Ají habanero o chombo (según tolerancia)</li>
+                                <li>Sal, pimienta</li>
+                                <li>Mostaza (algunas versiones)</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Cortar el pescado en cubos pequeños, limpiar bien.</li>
+                                <li>Colocar en recipiente no metálico.</li>
+                                <li>Verter el jugo de limón (y vinagre si usas), dejar reposar para que el pescado "cocine" con la acidez.</li>
+                                <li>Añadir cebolla, culantro, ají picado, sal, pimienta, mostaza si se desea.</li>
+                                <li>Mezclar bien y dejar reposar unas horas (o de un día para otro) para que los sabores se integren.</li>
+                                <li>Servir frío, acompañado de patacones o galletas saladas.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Miércoles – receta 3: Bistec picado con cebolla</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Carne de res cortada en tiras finas o filete (bistec)</li>
+                                <li>1 cebolla cortada en plumas</li>
+                                <li>1 pimiento opcional</li>
+                                <li>2 dientes de ajo picados</li>
+                                <li>Aceite</li>
+                                <li>Sal, pimienta, comino</li>
+                                <li>Limón (opcional)</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Sazonar la carne con sal, pimienta y comino.</li>
+                                <li>En una sartén caliente con aceite, saltear el ajo, luego agregar la carne y dorar rápidamente.</li>
+                                <li>Añadir la cebolla (y pimiento, si usas), saltear hasta que la cebolla esté suave pero aún firme.</li>
+                                <li>Ajustar sal y pimienta.</li>
+                                <li>Si lo deseas, puedes agregar un chorrito de limón para realzar sabor.</li>
+                                <li>Servir con arroz blanco, patacones o ensalada.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Miércoles – receta 4: Almojábanos de maíz panameños</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Masa de maíz (o maíz molido fresco)</li>
+                                <li>Queso blanco panameño rallado</li>
+                                <li>Azúcar (para algunas versiones dulces)</li>
+                                <li>Polvo de hornear</li>
+                                <li>Sal</li>
+                                <li>Aceite para freír</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Mezclar la masa de maíz con queso rallado, una pizca de sal y polvo de hornear. (Si lo quieres dulce, agregar azúcar).</li>
+                                <li>Formar pequeñas bolitas o discos con la masa.</li>
+                                <li>Freír en aceite caliente hasta que se doren.</li>
+                                <li>Escurrir sobre papel absorbente.</li>
+                                <li>Servir calientes, como desayuno o merienda.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Miércoles – receta 5: Sopa de mariscos estilo costero panameño</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Mariscos mixtos (camarones, almejas, pescado, calamares)</li>
+                                <li>1 cebolla picada</li>
+                                <li>2 dientes de ajo</li>
+                                <li>1 pimiento picado</li>
+                                <li>Tomate picado</li>
+                                <li>Culantro</li>
+                                <li>Sal, pimienta</li>
+                                <li>1 litro de caldo de pescado o agua</li>
+                                <li>Aceite</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>En una olla, sofreír cebolla, ajo, pimiento y tomate en aceite hasta suavizar.</li>
+                                <li>Agregar los mariscos y mezclar con el sofrito.</li>
+                                <li>Verter el caldo o agua suficiente para cubrir los ingredientes.</li>
+                                <li>Sazonar con sal, pimienta y culantro.</li>
+                                <li>Cocinar a fuego medio hasta que los mariscos estén cocidos (no demasiado para que no se endurezcan).</li>
+                                <li>Servir caliente, acompañada de arroz blanco o pan.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="jueves-recetas" class="day-recipes-section" style="display: none;">
+        <div class="container">
+            <div class="day-recipes-header">
+                <h2 class="day-recipes-title">🍽️ Recetas del Jueves</h2>
+                <button class="close-day-section" onclick="toggleDaySection('jueves')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="day-recipes-content">
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Jueves – receta 1: Guacho de mariscos panameño</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Mariscos mixtos (camarón, pulpo, pescado)</li>
+                                <li>2 tazas de arroz</li>
+                                <li>1 cebolla</li>
+                                <li>1 diente de ajo</li>
+                                <li>1 pimiento</li>
+                                <li>Culantro</li>
+                                <li>Tomate</li>
+                                <li>Sal, pimienta, comino</li>
+                                <li>Caldo de mariscos o agua</li>
+                                <li>Verduras (yuca, zanahoria opcional)</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Limpiar los mariscos y cocinarlos parcialmente, reservando caldo.</li>
+                                <li>En una olla, sofreír cebolla, ajo, pimiento y tomate.</li>
+                                <li>Añadir las verduras si usas; luego incorporar el arroz.</li>
+                                <li>Verter el caldo de mariscos o agua suficiente para cocinar el arroz.</li>
+                                <li>Agregar los mariscos y mezclar con cuidado.</li>
+                                <li>Sazonar con culantro, sal, pimienta y comino.</li>
+                                <li>Cocinar tapado a fuego bajo hasta que el arroz esté listo.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Jueves – receta 2: Pollo guisado a la criolla panameño</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Presas de pollo</li>
+                                <li>1 cebolla</li>
+                                <li>2 dientes de ajo</li>
+                                <li>1 pimiento</li>
+                                <li>2 tomates</li>
+                                <li>Culantro</li>
+                                <li>Aceite</li>
+                                <li>Sal, pimienta, comino</li>
+                                <li>Agua o caldo</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Sazonar el pollo con sal, pimienta y comino.</li>
+                                <li>En una olla con aceite, dorar el pollo por ambos lados. Retirar y reservar.</li>
+                                <li>En esa misma olla, sofreír cebolla, ajo, pimiento y tomate.</li>
+                                <li>Añadir el pollo de nuevo junto con agua o caldo hasta cubrir.</li>
+                                <li>Cocinar tapado a fuego medio hasta que el pollo esté tierno y el caldo reducido.</li>
+                                <li>Agregar culantro al final.</li>
+                                <li>Servir con arroz blanco y patacones.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Jueves – receta 3: Empanadas panameñas rellenas de carne</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Masa (puede ser de maíz o mezcla de harina)</li>
+                                <li>Relleno de carne: carne molida sazonada con cebolla, ajo, tomate, comino, culantro</li>
+                                <li>Aceite para freír</li>
+                                <li>Sal</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Preparar la masa: puede ser masa de maíz pilado o mezcla de harina. Agregar sal.</li>
+                                <li>Sofreír los ingredientes del relleno y sazonar bien.</li>
+                                <li>Tomar porciones de masa, hacer discos, colocar relleno en el centro y cerrar bien (sellar los bordes).</li>
+                                <li>Freír en aceite caliente hasta que estén doradas.</li>
+                                <li>Escurrir y servir calientes.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Jueves – receta 4: Arroz con mazorca y zanahorias (versión panameña)</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>2 tazas de arroz</li>
+                                <li>1 mazorca de maíz, cortada en trozos</li>
+                                <li>2 zanahorias picadas</li>
+                                <li>1 cebolla</li>
+                                <li>1 diente de ajo</li>
+                                <li>Aceite</li>
+                                <li>Caldo o agua</li>
+                                <li>Sal, pimienta</li>
+                                <li>Culantro</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Sofreír cebolla y ajo en aceite hasta que estén transparentes.</li>
+                                <li>Añadir las verduras: mazorca y zanahorias, mezclar.</li>
+                                <li>Agregar el arroz y mezclar todo.</li>
+                                <li>Verter caldo o agua suficiente para cocer el arroz.</li>
+                                <li>Sazonar con sal, pimienta y culantro.</li>
+                                <li>Tapar y cocinar a fuego bajo hasta que el arroz esté hecho.</li>
+                                <li>Dejar reposar y servir.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Jueves – receta 5: Hojaldres con queso (otra versión)</h3>
+                    <p class="recipe-description">Muy similar a la del martes, pero puedes variar la forma o añadir chiles picados para versión sabrosa:</p>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Masa de hojaldre</li>
+                                <li>Queso blanco rallado</li>
+                                <li>Chiles picados (opcional)</li>
+                                <li>Huevo para barnizar</li>
+                                <li>Sal</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Cortar la masa en formas deseadas.</li>
+                                <li>Colocar queso (+ chile si quieres) al centro, cerrar.</li>
+                                <li>Barnizar con huevo.</li>
+                                <li>Hornear hasta dorar.</li>
+                                <li>Servir caliente.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="viernes-recetas" class="day-recipes-section" style="display: none;">
+        <div class="container">
+            <div class="day-recipes-header">
+                <h2 class="day-recipes-title">🍽️ Recetas del Viernes</h2>
+                <button class="close-day-section" onclick="toggleDaySection('viernes')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="day-recipes-content">
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Viernes – receta 1: Lechona asada panameña</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>1 lechona entera (cerdo joven) o partes de cerdo (pierna, costillas)</li>
+                                <li>Ajo machacado</li>
+                                <li>Cebolla</li>
+                                <li>Pimiento</li>
+                                <li>Comino, sal, pimienta</li>
+                                <li>Culantro</li>
+                                <li>Aceite</li>
+                                <li>Agua o caldo</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Limpiar y adobar la lechona con ajo, cebolla, pimiento, comino, sal, pimienta y culantro. Dejar marinar varias horas (idealmente toda la noche).</li>
+                                <li>Precalentar el horno o preparar brasas si es al aire libre.</li>
+                                <li>Asar la lechona lentamente, dándole vuelta para que se cocine bien por todos lados y quede crujiente por fuera.</li>
+                                <li>Si usas partes, colocarlas en bandeja con un poco de agua o caldo para mantener humedad.</li>
+                                <li>Al final, subir la temperatura para dorar la piel.</li>
+                                <li>Servir con arroz con coco, patacones o ensalada.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Viernes – receta 2: Seco de res con arroz con coco</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Carne de res en trozos (para guiso)</li>
+                                <li>Ajo, cebolla, pimiento, tomate, culantro</li>
+                                <li>Comino, sal, pimienta</li>
+                                <li>Aceite</li>
+                                <li>Agua o caldo</li>
+                                <li>1 lata de leche de coco</li>
+                                <li>Arroz</li>
+                                <li>Verduras para acompañar</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Marinar la carne con ajo, sal, pimienta, comino y parte del culantro.</li>
+                                <li>Dorar la carne en aceite hasta sellar. Retirar y reservar.</li>
+                                <li>En la misma olla, sofreír cebolla, pimiento, ajo y tomate.</li>
+                                <li>Volver a incorporar la carne con agua o caldo, tapar y cocinar hasta que esté tierna.</li>
+                                <li>Mientras tanto, preparar arroz con coco usando la receta del arroz con coco (ver miércoles).</li>
+                                <li>Servir el seco de res sobre o junto con el arroz con coco.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Viernes – receta 3: Torrejas de bacalao panameñas</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Bacalao desalado y desmenuzado</li>
+                                <li>Masa de maíz o mezcla de harina</li>
+                                <li>Cebolla, ajo, pimiento finamente picados</li>
+                                <li>Huevos</li>
+                                <li>Perejil o culantro</li>
+                                <li>Sal, pimienta</li>
+                                <li>Aceite para freír</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Desmenuzar el bacalao desalado. Mezclar con cebolla, ajo, pimiento y hierbas.</li>
+                                <li>Añadir masa o harina y huevo para ligar la mezcla en una masa manejable.</li>
+                                <li>Formar tortitas (torrejas) de la mezcla.</li>
+                                <li>Freír en aceite caliente hasta que estén doradas y crujientes.</li>
+                                <li>Escurrir y servir calientes.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Viernes – receta 4: Plantintá (plátano frito estilo panameño)</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Plátanos maduros o verdes (dependiendo si prefieres dulce o salado)</li>
+                                <li>Aceite para freír</li>
+                                <li>Sal (si vas versión salada)</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Pelar y cortar los plátanos en rodajas o en tiras (según versión).</li>
+                                <li>Freír en aceite caliente hasta que estén dorados y cocidos.</li>
+                                <li>Escurrir y servir como acompañante o snack.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Viernes – receta 5: Empanadas de guayaba (dulce)</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Masa de harina (puede ser masa para empanadas)</li>
+                                <li>Dulce de guayaba (o pulpa de guayaba con azúcar)</li>
+                                <li>Azúcar (opcional para espolvorear)</li>
+                                <li>Huevo para barnizar</li>
+                                <li>Sal</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Estirar la masa y cortar en discos.</li>
+                                <li>Colocar una cucharada de dulce de guayaba en el centro de cada disco.</li>
+                                <li>Cerrar formando empanadas, sellar bordes.</li>
+                                <li>Barnizar con huevo.</li>
+                                <li>Hornear o freír según prefieras hasta dorar.</li>
+                                <li>Si es versión dulce, espolvorear azúcar una vez frías (opcional).</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sabado-recetas" class="day-recipes-section" style="display: none;">
+        <div class="container">
+            <div class="day-recipes-header">
+                <h2 class="day-recipes-title">🍽️ Recetas del Sábado</h2>
+                <button class="close-day-section" onclick="toggleDaySection('sabado')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="day-recipes-content">
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Sábado – receta 1: Guacho de pollo</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Pollo desmenuzado o piezas de pollo</li>
+                                <li>2 tazas de arroz</li>
+                                <li>Verduras: yuca, zanahoria, maíz</li>
+                                <li>1 cebolla</li>
+                                <li>1 diente de ajo</li>
+                                <li>1 pimiento</li>
+                                <li>Culantro</li>
+                                <li>Sal, pimienta</li>
+                                <li>Caldo o agua</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Cocinar el pollo hasta que esté tierno y desmenuzar. Reservar caldo.</li>
+                                <li>En una olla, sofreír cebolla, ajo y pimiento.</li>
+                                <li>Añadir las verduras, luego el arroz mezclarlo todo.</li>
+                                <li>Agregar el caldo del pollo para cocinar el arroz.</li>
+                                <li>Incorporar el pollo desmenuzado y mezclar suavemente.</li>
+                                <li>Sazonar con culantro, sal y pimienta. Cocinar hasta que el arroz esté listo.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Sábado – receta 2: Sopa de verduras con carnes estilo panameño</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Carne (res o pollo) en trozos</li>
+                                <li>Verduras variadas: calabaza, zanahoria, yuca, ñame, repollo</li>
+                                <li>1 cebolla</li>
+                                <li>2 dientes de ajo</li>
+                                <li>Pimiento</li>
+                                <li>Culantro</li>
+                                <li>Sal, pimienta</li>
+                                <li>Agua</li>
+                                <li>Aceite</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>En olla, dorar la carne con un poco de aceite, sazonar.</li>
+                                <li>Añadir cebolla, ajo y pimiento; sofreír.</li>
+                                <li>Agregar las verduras y cubrir con agua.</li>
+                                <li>Cocinar hasta que vegetales y carne estén tiernos.</li>
+                                <li>Agregar culantro al final.</li>
+                                <li>Servir caliente con arroz o pan.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Sábado – receta 3: Cosecha de mariscos (plato mixto costero panameño)</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Mariscos mixtos (camarón, pulpo, pescado, calamar)</li>
+                                <li>Ajo, cebolla, pimiento, tomate</li>
+                                <li>Culantro</li>
+                                <li>Limón</li>
+                                <li>Sal, pimienta</li>
+                                <li>Aceite</li>
+                                <li>Opcional: leche de coco</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Limpiar los mariscos.</li>
+                                <li>Sofreír ajo, cebolla, pimiento y tomate en aceite.</li>
+                                <li>Añadir los mariscos y mezclar con el sofrito.</li>
+                                <li>Si gustas, agregar un poco de leche de coco para sabor costero.</li>
+                                <li>Cocinar hasta que los mariscos estén al punto.</li>
+                                <li>Sazonar con culantro, sal, pimienta, un chorrito de limón.</li>
+                                <li>Servir caliente con arroz o plátanos.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Sábado – receta 4: Chicheme panameño (bebida dulce)</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Maíz tierno cocido</li>
+                                <li>Agua</li>
+                                <li>Leche (puede ser leche de vaca o vegetal)</li>
+                                <li>Azúcar</li>
+                                <li>Canela, clavo de olor, nuez moscada</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Cocer el maíz tierno en agua hasta que esté suave.</li>
+                                <li>Licuar parte del maíz con algo de agua hasta hacer una mezcla suave.</li>
+                                <li>Colar esa mezcla para separar sólidos si prefieres textura suave.</li>
+                                <li>Regresar a la olla, añadir más agua o leche según consistencia deseada.</li>
+                                <li>Agregar azúcar y especias (canela, clavo, nuez moscada).</li>
+                                <li>Cocinar hasta que espese ligeramente. Servir frío o templado.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Sábado – receta 5: Hojaldres con jamón y queso (versión salada panameña)</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>Masa de hojaldre</li>
+                                <li>Jamón (cocido) en lonchas</li>
+                                <li>Queso blanco o queso que se funda</li>
+                                <li>Huevo para barnizar</li>
+                                <li>Sal</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Cortar la masa en rectángulos o formas.</li>
+                                <li>En cada parte, colocar jamón y queso.</li>
+                                <li>Doblar o cubrir con otra capa de masa, sellar bordes.</li>
+                                <li>Barnizar con huevo.</li>
+                                <li>Hornear hasta que estén dorados. Servir calientes.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="domingo-recetas" class="day-recipes-section" style="display: none;">
+        <div class="container">
+            <div class="day-recipes-header">
+                <h2 class="day-recipes-title">🍽️ Recetas del Domingo</h2>
+                <button class="close-day-section" onclick="toggleDaySection('domingo')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="day-recipes-content">
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Domingo – receta 1: Pulpo a la Brasa con Salsa de Ají Chombo Ahumado</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>1 pulpo mediano (1-1.5 kg)</li>
+                                <li>3-4 ajíes chombo frescos</li>
+                                <li>4 cucharadas de aceite de oliva extra virgen</li>
+                                <li>2 limones (jugo)</li>
+                                <li>1 cucharadita de pimentón ahumado</li>
+                                <li>2 cucharadas de miel</li>
+                                <li>Sal y pimienta al gusto</li>
+                                <li>Aceite de oliva para sellar</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Preparar el pulpo: Cocinar el pulpo sous-vide a 75°C durante 4-6 horas para suavizarlo completamente.</li>
+                                <li>Preparar la salsa: Asar los ajíes chombo hasta que la piel se queme ligeramente. Pelar y retirar semillas.</li>
+                                <li>En un procesador, mezclar los ajíes asados con aceite de oliva, jugo de limón, pimentón ahumado y miel hasta obtener una salsa suave.</li>
+                                <li>Sazonar la salsa con sal y pimienta al gusto.</li>
+                                <li>Retirar el pulpo del sous-vide y secarlo bien con papel absorbente.</li>
+                                <li>En una parrilla o sartén muy caliente, sellar el pulpo con aceite de oliva hasta que se dore por ambos lados.</li>
+                                <li>Servir el pulpo cortado en rodajas, bañado con la salsa de ají chombo ahumado.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Domingo – receta 2: Cordero Sous-Vide con Reducción de Seco Herrerano</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>1 pierna de cordero (1.5-2 kg)</li>
+                                <li>4 ramitas de romero fresco</li>
+                                <li>4 dientes de ajo</li>
+                                <li>500 ml de Seco Herrerano</li>
+                                <li>200 g de panela</li>
+                                <li>2 naranjas agrias (jugo)</li>
+                                <li>Sal y pimienta al gusto</li>
+                                <li>Aceite de oliva</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Preparar el cordero: Sazonar la pierna de cordero con sal, pimienta, romero y ajo machacado.</li>
+                                <li>Cocinar sous-vide a 62°C durante 12 horas para obtener una textura tierna y jugosa.</li>
+                                <li>Preparar la reducción: En una olla, combinar el Seco Herrerano, panela y jugo de naranja agria.</li>
+                                <li>Cocinar a fuego medio-alto hasta reducir a la mitad y obtener una consistencia espesa y brillante.</li>
+                                <li>Retirar el cordero del sous-vide y secarlo bien.</li>
+                                <li>En una sartén muy caliente con aceite de oliva, sellar el cordero por todos los lados hasta dorar la superficie.</li>
+                                <li>Servir el cordero en rodajas, bañado con la reducción de Seco Herrerano caliente.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Domingo – receta 3: Risotto de Coco con Mariscos Panameños</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>400 g de arroz arborio o carnaroli</li>
+                                <li>400 ml de leche de coco</li>
+                                <li>1 litro de caldo de pescado caliente</li>
+                                <li>300 g de camarones frescos</li>
+                                <li>200 g de langostinos o concha fina</li>
+                                <li>2 cucharadas de aceite de achiote</li>
+                                <li>1 cebolla picada finamente</li>
+                                <li>2 dientes de ajo</li>
+                                <li>Vino blanco (opcional)</li>
+                                <li>Sal y pimienta al gusto</li>
+                                <li>Culantro fresco para decorar</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>En una sartén grande, calentar el aceite de achiote y saltear la cebolla y ajo hasta que estén transparentes.</li>
+                                <li>Agregar el arroz y tostar ligeramente durante 2 minutos, removiendo constantemente.</li>
+                                <li>Si usas vino blanco, agregarlo y dejar que se evapore.</li>
+                                <li>Agregar la leche de coco y comenzar a agregar el caldo de pescado caliente, una cucharada a la vez, removiendo constantemente.</li>
+                                <li>Continuar agregando caldo mientras el arroz lo absorbe, hasta que el arroz esté cremoso pero al dente (aproximadamente 18-20 minutos).</li>
+                                <li>Mientras tanto, en otra sartén, saltear los mariscos en aceite de achiote hasta que estén cocidos.</li>
+                                <li>Incorporar los mariscos al risotto y ajustar sal y pimienta.</li>
+                                <li>Servir inmediatamente, decorado con culantro fresco.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Domingo – receta 4: Pato Glaseado con Miel de Caña y Tamarindo</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>1 pato entero (2-2.5 kg)</li>
+                                <li>200 ml de miel de caña</li>
+                                <li>100 g de pulpa de tamarindo</li>
+                                <li>1 cucharadita de pimienta de Jamaica molida</li>
+                                <li>Sal y pimienta negra al gusto</li>
+                                <li>2 cebollas</li>
+                                <li>4 dientes de ajo</li>
+                                <li>Ramas de tomillo</li>
+                                <li>Aceite de oliva</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Precalentar el horno a 160°C.</li>
+                                <li>Preparar el glaseado: En un bol, mezclar la miel de caña, pulpa de tamarindo y pimienta de Jamaica hasta obtener una mezcla homogénea.</li>
+                                <li>Sazonar el pato por dentro y por fuera con sal y pimienta negra.</li>
+                                <li>Rellenar la cavidad del pato con cebollas, ajos y ramas de tomillo.</li>
+                                <li>Colocar el pato en una bandeja para horno con rejilla, con el pecho hacia arriba.</li>
+                                <li>Hornear lentamente durante 2-2.5 horas, rociando con el glaseado cada 20-30 minutos.</li>
+                                <li>Durante los últimos 15 minutos, aumentar la temperatura a 200°C para dorar la piel.</li>
+                                <li>Retirar del horno y dejar reposar 15 minutos antes de cortar y servir con el glaseado restante.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-full">
+                    <h3 class="recipe-card-title">Domingo – receta 5: Ensalada Tibia de Yuca Trufada con Tocino y Culantro</h3>
+                    <div class="recipe-details">
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-shopping-basket"></i> Ingredientes</h4>
+                            <ul class="ingredients-list">
+                                <li>500 g de yuca fresca</li>
+                                <li>200 g de tocino en cubos</li>
+                                <li>1 cebolla morada mediana</li>
+                                <li>2 cucharadas de aceite de trufa</li>
+                                <li>1 manojo de culantro fresco</li>
+                                <li>2 cucharadas de vinagre de arroz</li>
+                                <li>Sal y pimienta al gusto</li>
+                                <li>Aceite de oliva</li>
+                            </ul>
+                        </div>
+                        <div class="recipe-section">
+                            <h4><i class="fas fa-utensils"></i> Procedimiento</h4>
+                            <ol class="procedure-list">
+                                <li>Pelar y cortar la yuca en trozos medianos. Cocinar en agua con sal hasta que esté tierna pero firme (aproximadamente 20-25 minutos).</li>
+                                <li>Escurrir la yuca y dejar enfriar ligeramente. Cortar en cubos.</li>
+                                <li>Preparar el encurtido: Cortar la cebolla morada en plumas finas y macerar con vinagre de arroz y una pizca de sal durante 15 minutos.</li>
+                                <li>En una sartén, cocinar el tocino hasta que esté crujiente. Retirar y reservar el tocino, manteniendo la grasa en la sartén.</li>
+                                <li>En la misma sartén con la grasa del tocino, saltear los cubos de yuca hasta que se doren ligeramente.</li>
+                                <li>Agregar el aceite de trufa y mezclar bien.</li>
+                                <li>En un bol grande, combinar la yuca trufada, el tocino crujiente, la cebolla morada encurtida y el culantro fresco picado.</li>
+                                <li>Ajustar sal y pimienta. Servir tibia como acompañamiento o plato principal.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Modal de Receta -->
     <div class="recipe-modal" id="recipe-modal">
         <div class="modal-overlay" id="modal-overlay"></div>
@@ -259,18 +1349,6 @@
         </div>
     </div>
 
-    <section id="contacto" class="contact-section">
-        <div class="container">
-            <h2 class="section-title">Contacto</h2>
-            <div class="contact-content">
-                <p>¿Tienes una receta para compartir o una sugerencia? Escríbeme y con gusto te leo.</p>
-                <a class="btn-primary" href="mailto:contacto@naty-recetas.com">
-                    <i class="fas fa-envelope"></i>
-                    Enviar correo
-                </a>
-            </div>
-        </div>
-    </section>
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -301,6 +1379,7 @@
     </footer>
 
     <script src="recipes-database.js"></script>
+    <script src="recipes-database-complete.js"></script>
     <script src="optimizations.js"></script>
     <script src="magic-effects.js"></script>
     <script src="script.js"></script>

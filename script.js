@@ -4,19 +4,28 @@ let currentWeek = 0;
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 let currentRecipeModal = null;
 
-// Usar la base de datos expandida
-const recipesDatabase = window.EXPANDED_RECIPES_DATABASE;
+// Función para obtener la base de datos de manera segura
+function getRecipesDatabase() {
+    return window.EXPANDED_RECIPES_DATABASE || window.COMPLETE_RECIPES_DATABASE || null;
+}
+
+// Usar la base de datos expandida (se actualizará cuando esté disponible)
+let recipesDatabase = getRecipesDatabase();
 
 // Funciones auxiliares para acceder a la base de datos
 function getRecipesForDay(day) {
+    // Actualizar la referencia a la base de datos por si acaso
+    recipesDatabase = getRecipesDatabase();
+    
     if (!recipesDatabase || !recipesDatabase.weekly) {
-        console.error('Base de datos no encontrada');
+        console.error('Base de datos no encontrada para el día:', day);
         return {};
     }
     return recipesDatabase.weekly[day] || {};
 }
 
 function getHealthyRecipesByType(type) {
+    recipesDatabase = getRecipesDatabase();
     if (!recipesDatabase || !recipesDatabase.healthy) {
         console.error('Base de datos no encontrada');
         return [];
@@ -41,6 +50,7 @@ function getHealthyRecipesByType(type) {
 }
 
 function getFestivals() {
+    recipesDatabase = getRecipesDatabase();
     if (!recipesDatabase || !recipesDatabase.festivals) {
         console.error('Base de datos no encontrada');
         return [];
@@ -85,8 +95,23 @@ function scrollToSection(sectionId) {
     }
 }
 
+// Función para manejar clics en las tarjetas de días
+function handleDayCardClick(event, day) {
+    // Si se presiona Ctrl o Cmd, permitir navegación normal a dia.html
+    if (event.ctrlKey || event.metaKey) {
+        return; // Permitir navegación normal
+    }
+    
+    // Prevenir navegación por defecto
+    event.preventDefault();
+    
+    // Navegar a la sección del día en la misma página
+    scrollToDay(day);
+}
+
 // Función para buscar receta por ID
 function findRecipeById(recipeId) {
+    recipesDatabase = getRecipesDatabase();
     if (!recipesDatabase) return null;
     
     // Buscar en recetas semanales
@@ -145,6 +170,7 @@ function addComment() {
 
 // Función para el botón de receta aleatoria
 function getRandomRecipe() {
+    recipesDatabase = getRecipesDatabase();
     if (!recipesDatabase) return null;
     
     const allRecipes = [];
@@ -180,19 +206,73 @@ function getRandomRecipe() {
 // Inicialización
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Iniciando aplicación...');
+    
+    // Asegurar que la base de datos esté disponible
+    recipesDatabase = getRecipesDatabase();
     console.log('Base de datos disponible:', !!recipesDatabase);
     
-    if (recipesDatabase) {
-        console.log('Recetas semanales:', Object.keys(recipesDatabase.weekly || {}));
-        console.log('Recetas saludables:', Object.keys(recipesDatabase.healthy || {}));
-        console.log('Festividades:', recipesDatabase.festivals?.length || 0);
+    if (!recipesDatabase) {
+        console.warn('⚠️ Base de datos no disponible aún, esperando...');
+        // Intentar nuevamente después de un breve delay
+        setTimeout(() => {
+            recipesDatabase = getRecipesDatabase();
+            if (recipesDatabase) {
+                console.log('✅ Base de datos cargada correctamente');
+            } else {
+                console.error('❌ Error: Base de datos no disponible');
+            }
+        }, 100);
     }
     
+    // Inicializar tema
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        currentTheme = 'dark';
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        currentTheme = 'light';
+        localStorage.setItem('theme', 'light');
+    }
+    
+    // Configurar botón de tema
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', switchTheme);
+        updateThemeToggleIcon();
+    }
+    
+    // Inicializar componentes
     initializeApp();
     setupEventListeners();
-    generateHealthyRecipes();
-    generateFestivalRecipes();
+    setupDropdownMenus(); // Asegurarse de que se llame después de que el DOM esté listo
+    
+    // Efectos y animaciones
+    generateParticles();
+    setupScrollAnimations();
+    setupSmoothNavigation();
     createMagicParticles();
+    
+    // Configuración adicional
+    initializeLocalStorage();
+    applicationHealthCheck();
+    
+    // Inicialización de efectos adicionales después de un pequeño retraso
+    setTimeout(() => {
+        addParticleEffects();
+        addSparkleEffect();
+        addMagicHoverEffects();
+    }, 500);
+    
+    // Configurar manejador de errores de imágenes
+    document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('error', function() {
+            handleImageError(this);
+        });
+    });
 });
 
 function initializeApp() {
@@ -282,21 +362,51 @@ function setupEventListeners() {
     // Event listeners adicionales para scroll suave
     document.querySelectorAll('.btn-secondary').forEach(btn => {
         if (btn.textContent.includes('Semanal')) {
-            btn.addEventListener('click', () => scrollToSection('semanal'));
+            btn.addEventListener('click', () => scrollToSection('recetas'));
         }
     });
 }
 
 function switchTheme() {
-    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-    localStorage.setItem('theme', currentTheme);
-    document.documentElement.setAttribute('data-theme', currentTheme);
+    if (currentTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        currentTheme = 'dark';
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        currentTheme = 'light';
+        localStorage.setItem('theme', 'light');
+    }
     updateThemeToggleIcon();
+    
+    // Actualizar estilos específicos del tema
+    updateThemeStyles();
 }
 
 function updateThemeToggleIcon() {
     const icon = document.querySelector('#theme-toggle i');
-    icon.className = currentTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    if (icon) {
+        icon.className = currentTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+}
+
+function updateThemeStyles() {
+    // Esta función actualiza estilos específicos cuando cambia el tema
+    const root = document.documentElement;
+    
+    if (currentTheme === 'dark') {
+        root.style.setProperty('--bg-primary', '#1a1a1a');
+        root.style.setProperty('--bg-secondary', '#2d2d2d');
+        root.style.setProperty('--bg-card', '#333333');
+        root.style.setProperty('--text-primary', '#ffffff');
+        root.style.setProperty('--text-secondary', '#cccccc');
+    } else {
+        root.style.setProperty('--bg-primary', '#FFF8E1');
+        root.style.setProperty('--bg-secondary', '#F5F5DC');
+        root.style.setProperty('--bg-card', '#FFFFFF');
+        root.style.setProperty('--text-primary', '#212121');
+        root.style.setProperty('--text-secondary', '#666666');
+    }
 }
 
 function toggleMobileNav() {
@@ -310,52 +420,290 @@ function toggleMobileNav() {
 // Configurar menús desplegables
 function setupDropdownMenus() {
     const dropdowns = document.querySelectorAll('.nav-dropdown');
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
     
-    dropdowns.forEach(dropdown => {
-        const mainLink = dropdown.querySelector('.nav-link');
-        const dropdownMenu = dropdown.querySelector('.dropdown-menu');
-        
-        // En móvil, hacer click para expandir/contraer
-        if (window.innerWidth <= 768) {
-            mainLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Cerrar otros menús
-                dropdowns.forEach(otherDropdown => {
-                    if (otherDropdown !== dropdown) {
-                        const otherMenu = otherDropdown.querySelector('.dropdown-menu');
-                        if (otherMenu) {
-                            otherMenu.style.opacity = '0';
-                            otherMenu.style.maxHeight = '0';
-                            otherMenu.style.visibility = 'hidden';
-                        }
-                    }
+    console.log('Setting up dropdown menus, found:', dropdowns.length, 'dropdowns');
+    
+    // Toggle mobile menu
+    if (navToggle) {
+        navToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            navMenu.classList.toggle('active');
+            this.classList.toggle('active');
+            
+            // Close all dropdowns when mobile menu is closed
+            if (!navMenu.classList.contains('active')) {
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
                 });
-                
-                // Toggle el menú actual
-                if (dropdownMenu.style.maxHeight === '0px' || !dropdownMenu.style.maxHeight) {
-                    dropdownMenu.style.opacity = '1';
-                    dropdownMenu.style.maxHeight = '500px';
-                    dropdownMenu.style.visibility = 'visible';
-                } else {
-                    dropdownMenu.style.opacity = '0';
-                    dropdownMenu.style.maxHeight = '0';
-                    dropdownMenu.style.visibility = 'hidden';
+            }
+        });
+    }
+    
+    // Handle dropdown toggles
+    dropdowns.forEach(dropdown => {
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+        const menu = dropdown.querySelector('.dropdown-menu');
+        
+        if (!toggle || !menu) return;
+        
+        // Toggle menu on click
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('Toggle clicked, current state:', dropdown.classList.contains('active'));
+            
+            // Close other dropdowns
+            dropdowns.forEach(otherDropdown => {
+                if (otherDropdown !== dropdown) {
+                    otherDropdown.classList.remove('active');
                 }
             });
-        }
+            
+            // Toggle current dropdown
+            const isActive = dropdown.classList.contains('active');
+            if (isActive) {
+                dropdown.classList.remove('active');
+            } else {
+                dropdown.classList.add('active');
+            }
+            
+            console.log('New state:', dropdown.classList.contains('active'));
+            
+            // On mobile, ensure the menu is open when dropdown is toggled
+            if (window.innerWidth <= 768) {
+                navMenu.classList.add('active');
+                if (navToggle) navToggle.classList.add('active');
+            }
+        });
+        
+        // Handle day navigation
+        const dayLinks = menu.querySelectorAll('[data-day]');
+        dayLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const day = this.getAttribute('data-day');
+                
+                // Close menus
+                dropdown.classList.remove('active');
+                if (navMenu) navMenu.classList.remove('active');
+                if (navToggle) navToggle.classList.remove('active');
+                
+                // Scroll to the day's section
+                scrollToDay(day);
+            });
+        });
     });
     
-    // Reconfigurar en resize
-    window.addEventListener('resize', () => {
+    // Close dropdowns when clicking outside
+    // Usar setTimeout para que el toggle se ejecute primero
+    document.addEventListener('click', function(e) {
+        setTimeout(() => {
+            // Verificar si el click fue en un toggle - si es así, no hacer nada
+            const clickedToggle = e.target.closest('.dropdown-toggle');
+            if (clickedToggle) {
+                return; // El toggle manejará el estado
+            }
+            
+            // Verificar si el click fue dentro de algún dropdown
+            let clickedInsideDropdown = false;
+            dropdowns.forEach(dropdown => {
+                if (dropdown.contains(e.target) && !e.target.closest('.dropdown-toggle')) {
+                    clickedInsideDropdown = true;
+                }
+            });
+            
+            // Solo cerrar si el click fue fuera de todos los dropdowns
+            if (!clickedInsideDropdown) {
+                dropdowns.forEach(dropdown => {
+                    if (dropdown.classList.contains('active')) {
+                        dropdown.classList.remove('active');
+                    }
+                });
+            }
+        }, 50);
+    });
+    
+    // Handle window resize
+    const handleResize = function() {
         if (window.innerWidth > 768) {
-            document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                menu.style.opacity = '';
-                menu.style.maxHeight = '';
-                menu.style.visibility = '';
+            if (navMenu) navMenu.classList.remove('active');
+            if (navToggle) navToggle.classList.remove('active');
+            
+            // Reset dropdowns on desktop
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
             });
         }
+    };
+    
+    // Add resize event listener with debounce
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(handleResize, 250);
     });
+}
+
+// Función para desplazarse a la sección del día correspondiente
+function scrollToDay(day) {
+    // Mapear nombres de días en español a inglés
+    const dayMap = {
+        'lunes': 'monday',
+        'martes': 'tuesday',
+        'miercoles': 'wednesday',
+        'jueves': 'thursday',
+        'viernes': 'friday',
+        'sabado': 'saturday',
+        'domingo': 'sunday'
+    };
+    
+    const dayKey = dayMap[day] || day;
+    const dayElement = document.getElementById(day);
+    
+    if (dayElement) {
+        window.scrollTo({
+            top: dayElement.offsetTop - 80, // Ajuste para el header fijo
+            behavior: 'smooth'
+        });
+        
+        // Mostrar las recetas del día
+        showDayRecipes(dayKey);
+    } else {
+        // Si no encuentra la sección, crear una y mostrar las recetas
+        createDaySection(day, dayKey);
+        showDayRecipes(dayKey);
+    }
+}
+
+// Función para mostrar las recetas de un día específico
+function showDayRecipes(dayKey) {
+    const recipes = getRecipesForDay(dayKey);
+    if (!recipes || Object.keys(recipes).length === 0) {
+        console.warn(`No hay recetas para ${dayKey}`);
+        return;
+    }
+    
+    // Buscar o crear la sección del día
+    let daySection = document.getElementById(dayKey);
+    if (!daySection) {
+        // Mapear de vuelta a español para el ID
+        const spanishDays = {
+            'monday': 'lunes',
+            'tuesday': 'martes',
+            'wednesday': 'miercoles',
+            'thursday': 'jueves',
+            'friday': 'viernes',
+            'saturday': 'sabado',
+            'sunday': 'domingo'
+        };
+        daySection = document.getElementById(spanishDays[dayKey] || dayKey);
+    }
+    
+    if (!daySection) {
+        createDaySection(spanishDays[dayKey] || dayKey, dayKey);
+        daySection = document.getElementById(spanishDays[dayKey] || dayKey);
+    }
+    
+    if (daySection) {
+        // Generar el HTML con las recetas
+        const dayName = {
+            'monday': 'Lunes',
+            'tuesday': 'Martes',
+            'wednesday': 'Miércoles',
+            'thursday': 'Jueves',
+            'friday': 'Viernes',
+            'saturday': 'Sábado',
+            'sunday': 'Domingo'
+        }[dayKey] || dayKey;
+        
+        let html = `<div class="container">
+            <h2 class="section-title">Menú del ${dayName}</h2>
+            <div class="day-recipes-container">`;
+        
+        // Mostrar recetas por tipo de comida
+        const mealTypes = {
+            'desayuno': 'Desayuno',
+            'almuerzo': 'Almuerzo',
+            'cena': 'Cena'
+        };
+        
+        Object.keys(mealTypes).forEach(mealType => {
+            if (recipes[mealType] && recipes[mealType].length > 0) {
+                html += `<div class="meal-section">
+                    <h3 class="meal-title">
+                        <i class="fas fa-${mealType === 'desayuno' ? 'sun' : mealType === 'almuerzo' ? 'utensils' : 'moon'}"></i>
+                        ${mealTypes[mealType]}
+                    </h3>
+                    <div class="recipes-grid">`;
+                
+                recipes[mealType].forEach(recipe => {
+                    html += `
+                        <div class="recipe-card" onclick="openRecipeModal('${recipe.id}')">
+                            <img src="${recipe.image}" alt="${recipe.name}" class="recipe-image">
+                            <div class="recipe-info">
+                                <h4 class="recipe-name">${recipe.name}</h4>
+                                <p class="recipe-description">${recipe.description}</p>
+                                <div class="recipe-meta">
+                                    <span class="recipe-time"><i class="fas fa-clock"></i> ${recipe.time}</span>
+                                    <span class="recipe-difficulty"><i class="fas fa-star"></i> ${recipe.difficulty}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += `</div></div>`;
+            }
+        });
+        
+        html += `</div></div>`;
+        daySection.innerHTML = html;
+        daySection.style.display = 'block'; // Mostrar la sección
+        
+        // Scroll suave a la sección
+        setTimeout(() => {
+            window.scrollTo({
+                top: daySection.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }, 100);
+    }
+}
+
+// Función para crear una sección de día si no existe
+function createDaySection(dayId, dayKey) {
+    // Primero verificar si ya existe
+    let daySection = document.getElementById(dayId);
+    if (daySection) {
+        return daySection;
+    }
+    
+    const recipesWall = document.getElementById('recetas') || document.querySelector('.recipes-wall');
+    if (!recipesWall) {
+        // Si no existe recipesWall, buscar la última sección antes del footer
+        const footer = document.querySelector('footer');
+        if (footer) {
+            daySection = document.createElement('section');
+            daySection.id = dayId;
+            daySection.className = 'day-embed';
+            daySection.style.display = 'none';
+            footer.parentNode.insertBefore(daySection, footer);
+            return daySection;
+        }
+        return null;
+    }
+    
+    daySection = document.createElement('section');
+    daySection.id = dayId;
+    daySection.className = 'day-embed';
+    daySection.style.display = 'none';
+    
+    // Insertar después de la sección de recetas
+    recipesWall.parentNode.insertBefore(daySection, recipesWall.nextSibling);
+    return daySection;
 }
 
 function generateWeeklyRecipes() {
@@ -1936,3 +2284,328 @@ window.addComment = addComment;
 window.closeCommentsModal = closeCommentsModal;
 window.filterRecipesByCategory = filterRecipesByCategory;
 window.filterHealthyRecipes = filterHealthyRecipes;
+window.handleDayCardClick = handleDayCardClick;
+window.scrollToDay = scrollToDay;
+
+// Función para expandir/colapsar secciones de días
+function toggleDaySection(day) {
+    const section = document.getElementById(`${day}-recetas`);
+    if (!section) return;
+    
+    const isVisible = section.style.display !== 'none';
+    
+    // Cerrar todas las secciones primero
+    document.querySelectorAll('.day-recipes-section').forEach(sec => {
+        sec.style.display = 'none';
+    });
+    
+    // Si estaba oculta, mostrarla
+    if (!isVisible) {
+        section.style.display = 'block';
+        // Scroll suave a la sección
+        setTimeout(() => {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    }
+}
+
+window.toggleDaySection = toggleDaySection;
+
+// Función para movimiento automático del carrusel
+function initCarouselAutoScroll() {
+    const weekGrid = document.getElementById('week-grid') || document.querySelector('.week-grid');
+    if (!weekGrid) {
+        // Reintentar después de un breve delay
+        setTimeout(initCarouselAutoScroll, 500);
+        return;
+    }
+    
+    let scrollPosition = 0;
+    const scrollSpeed = 2; // Velocidad de desplazamiento (píxeles por frame) - aumentada para movimiento más visible
+    let direction = 1; // 1 para derecha, -1 para izquierda
+    let isPaused = false;
+    let isUserInteracting = false;
+    let animationId = null;
+    let lastScrollTime = Date.now();
+    let userScrollPosition = 0;
+    
+    // Guardar instancia para control desde las flechas
+    const instance = {
+        isPaused: false,
+        setPaused: (value) => { isPaused = value; }
+    };
+    carouselAutoScrollInstance = instance;
+    
+    function getMaxScroll() {
+        const max = weekGrid.scrollWidth - weekGrid.clientWidth;
+        return max > 0 ? max : 0;
+    }
+    
+    function autoScroll() {
+        if (isPaused || isUserInteracting || instance.isPaused) {
+            animationId = requestAnimationFrame(autoScroll);
+            return;
+        }
+        
+        const maxScroll = getMaxScroll();
+        
+        // Solo animar si hay scroll disponible
+        if (maxScroll <= 0) {
+            animationId = requestAnimationFrame(autoScroll);
+            return;
+        }
+        
+        scrollPosition += scrollSpeed * direction;
+        
+        // Cambiar dirección cuando llegue a los extremos con una pequeña pausa
+        if (scrollPosition >= maxScroll - 1) {
+            scrollPosition = maxScroll;
+            direction = -1;
+            // Pequeña pausa al llegar al final antes de cambiar dirección
+            setTimeout(() => {}, 500);
+        } else if (scrollPosition <= 1) {
+            scrollPosition = 0;
+            direction = 1;
+            // Pequeña pausa al llegar al inicio antes de cambiar dirección
+            setTimeout(() => {}, 500);
+        }
+        
+        // Aplicar el scroll directamente para movimiento más fluido
+        weekGrid.scrollLeft = scrollPosition;
+        animationId = requestAnimationFrame(autoScroll);
+    }
+    
+    // Detectar interacción del usuario
+    let userScrollTimeout;
+    weekGrid.addEventListener('scroll', () => {
+        const now = Date.now();
+        const currentScroll = weekGrid.scrollLeft;
+        
+        // Detectar si el scroll es manual (diferencia significativa)
+        if (Math.abs(currentScroll - userScrollPosition) > 5 && now - lastScrollTime > 50) {
+            isUserInteracting = true;
+            scrollPosition = currentScroll; // Sincronizar posición
+            clearTimeout(userScrollTimeout);
+            userScrollTimeout = setTimeout(() => {
+                isUserInteracting = false;
+                // Ajustar dirección basada en la posición actual
+                const maxScroll = getMaxScroll();
+                if (scrollPosition >= maxScroll - 10) {
+                    direction = -1;
+                } else if (scrollPosition <= 10) {
+                    direction = 1;
+                }
+            }, 3000); // Reanudar después de 3 segundos sin interacción
+        }
+        userScrollPosition = currentScroll;
+        lastScrollTime = now;
+    });
+    
+    // Pausar cuando el usuario pasa el mouse
+    weekGrid.addEventListener('mouseenter', () => {
+        isPaused = true;
+        instance.isPaused = true;
+    });
+    
+    weekGrid.addEventListener('mouseleave', () => {
+        isPaused = false;
+        instance.isPaused = false;
+    });
+    
+    // Pausar cuando el usuario toca (móvil)
+    let touchStartX = 0;
+    weekGrid.addEventListener('touchstart', (e) => {
+        isPaused = true;
+        instance.isPaused = true;
+        touchStartX = e.touches[0].clientX;
+    });
+    
+    weekGrid.addEventListener('touchend', () => {
+        setTimeout(() => {
+            isPaused = false;
+            instance.isPaused = false;
+        }, 2000);
+    });
+    
+    // Iniciar animación después de que todo esté cargado
+    function startAnimation() {
+        const maxScroll = getMaxScroll();
+        if (maxScroll > 0) {
+            // Asegurar que el scroll esté en posición inicial
+            scrollPosition = 0;
+            weekGrid.scrollLeft = 0;
+            autoScroll();
+        } else {
+            // Si no hay scroll, reintentar después de un delay
+            setTimeout(startAnimation, 1000);
+        }
+    }
+    
+    // Esperar a que las imágenes se carguen y el layout esté listo
+    if (document.readyState === 'complete') {
+        setTimeout(startAnimation, 1500);
+    } else {
+        window.addEventListener('load', () => {
+            setTimeout(startAnimation, 1500);
+        });
+    }
+}
+
+// Variable global para controlar el movimiento automático desde las flechas
+let carouselAutoScrollInstance = null;
+
+// Función para inicializar las flechas del carrusel
+function initCarouselArrows() {
+    const weekGrid = document.getElementById('week-grid') || document.querySelector('.week-grid');
+    const arrowLeft = document.getElementById('carousel-arrow-left');
+    const arrowRight = document.getElementById('carousel-arrow-right');
+    
+    if (!weekGrid || !arrowLeft || !arrowRight) {
+        setTimeout(initCarouselArrows, 500);
+        return;
+    }
+    
+    // Función para actualizar el estado de las flechas
+    function updateArrowVisibility() {
+        const maxScroll = weekGrid.scrollWidth - weekGrid.clientWidth;
+        const currentScroll = weekGrid.scrollLeft;
+        
+        // Mostrar/ocultar flechas según la posición
+        if (maxScroll <= 0) {
+            arrowLeft.style.display = 'none';
+            arrowRight.style.display = 'none';
+            return;
+        }
+        
+        arrowLeft.style.display = 'flex';
+        arrowRight.style.display = 'flex';
+        
+        // Deshabilitar flecha izquierda si está al inicio
+        if (currentScroll <= 5) {
+            arrowLeft.disabled = true;
+            arrowLeft.style.opacity = '0.4';
+            arrowLeft.style.pointerEvents = 'none';
+        } else {
+            arrowLeft.disabled = false;
+            arrowLeft.style.opacity = '1';
+            arrowLeft.style.pointerEvents = 'auto';
+        }
+        
+        // Deshabilitar flecha derecha si está al final
+        if (currentScroll >= maxScroll - 5) {
+            arrowRight.disabled = true;
+            arrowRight.style.opacity = '0.4';
+            arrowRight.style.pointerEvents = 'none';
+        } else {
+            arrowRight.disabled = false;
+            arrowRight.style.opacity = '1';
+            arrowRight.style.pointerEvents = 'auto';
+        }
+    }
+    
+    // Función para desplazar el carrusel
+    function scrollCarousel(direction) {
+        // Pausar movimiento automático temporalmente
+        if (carouselAutoScrollInstance && carouselAutoScrollInstance.setPaused) {
+            carouselAutoScrollInstance.setPaused(true);
+        }
+        
+        const scrollAmount = weekGrid.clientWidth * 0.75; // Desplazar 75% del ancho visible
+        const currentScroll = weekGrid.scrollLeft;
+        let targetScroll;
+        
+        if (direction === 'left') {
+            targetScroll = Math.max(0, currentScroll - scrollAmount);
+        } else {
+            const maxScroll = weekGrid.scrollWidth - weekGrid.clientWidth;
+            targetScroll = Math.min(maxScroll, currentScroll + scrollAmount);
+        }
+        
+        // Usar scrollTo con smooth para animación
+        if (weekGrid.scrollTo) {
+            weekGrid.scrollTo({
+                left: targetScroll,
+                behavior: 'smooth'
+            });
+        } else {
+            // Fallback para navegadores antiguos
+            weekGrid.scrollLeft = targetScroll;
+        }
+        
+        // Actualizar estado de flechas después de un breve delay
+        setTimeout(updateArrowVisibility, 100);
+        setTimeout(updateArrowVisibility, 500);
+        
+        // Reanudar movimiento automático después de 3 segundos
+        setTimeout(() => {
+            if (carouselAutoScrollInstance && carouselAutoScrollInstance.setPaused) {
+                carouselAutoScrollInstance.setPaused(false);
+            }
+        }, 3000);
+    }
+    
+    // Event listeners para las flechas - usando onclick para mayor compatibilidad
+    arrowLeft.onclick = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        scrollCarousel('left');
+        return false;
+    };
+    
+    arrowRight.onclick = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        scrollCarousel('right');
+        return false;
+    };
+    
+    // También agregar addEventListener como respaldo
+    arrowLeft.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        scrollCarousel('left');
+    }, { once: false });
+    
+    arrowRight.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        scrollCarousel('right');
+    }, { once: false });
+    
+    // Actualizar visibilidad de flechas al hacer scroll
+    weekGrid.addEventListener('scroll', updateArrowVisibility);
+    
+    // Actualizar visibilidad al redimensionar la ventana
+    window.addEventListener('resize', () => {
+        setTimeout(updateArrowVisibility, 100);
+    });
+    
+    // Actualizar visibilidad inicial con múltiples intentos
+    setTimeout(updateArrowVisibility, 100);
+    setTimeout(updateArrowVisibility, 500);
+    setTimeout(updateArrowVisibility, 1000);
+    setTimeout(updateArrowVisibility, 2000);
+}
+
+// Inicializar carrusel cuando el DOM esté listo
+function initializeCarousel() {
+    // Inicializar movimiento automático
+    initCarouselAutoScroll();
+    
+    // Inicializar flechas con múltiples intentos para asegurar que funcione
+    initCarouselArrows();
+    
+    // Reintentar inicialización de flechas después de que todo esté cargado
+    window.addEventListener('load', () => {
+        setTimeout(initCarouselArrows, 500);
+        setTimeout(initCarouselArrows, 1500);
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(initializeCarousel, 500);
+    });
+} else {
+    setTimeout(initializeCarousel, 500);
+}
