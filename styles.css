@@ -358,8 +358,9 @@ body {
   display: flex;
   align-items: center;
   position: relative;
-  background: var(--gradient-dark);
+  background: linear-gradient(135deg, #FFF8E1, #F5F5DC, #FFF8E1);
   overflow: hidden;
+  transition: background 0.3s ease;
 }
 
 .hero-background {
@@ -1782,6 +1783,45 @@ section {
   content: "\f186"; /* Luna para tema claro */
 }
 
+/* Estilos del hero en modo oscuro */
+[data-theme="dark"] .hero {
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d, #1a1a1a);
+}
+
+[data-theme="dark"] .hero::before {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 111, 97, 0.15) 0%, transparent 60%),
+    radial-gradient(circle at 80% 20%, rgba(255, 140, 0, 0.15) 0%, transparent 60%),
+    radial-gradient(circle at 40% 40%, rgba(139, 69, 19, 0.1) 0%, transparent 60%),
+    linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(45, 45, 45, 0.95));
+}
+
+[data-theme="dark"] .hero-title {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .hero-subtitle {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .hero-badge {
+  background: rgba(255, 111, 97, 0.15);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+[data-theme="dark"] .hero-stats .stat-number {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .hero-stats .stat-label {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .hero-trust p {
+  color: var(--text-secondary);
+}
+
 @media (max-width: 480px) {
   :root {
     --section-padding: 3rem 0;
@@ -1928,16 +1968,6 @@ section {
   overflow-x: visible;
 }
 
-/* Contenedor del carrusel con flechas */
-.carousel-wrapper {
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.5rem 0;
-}
-
 .filters-bar {
   display: flex;
   gap: 0.75rem;
@@ -1974,11 +2004,10 @@ section {
   padding-bottom: 1rem;
   scrollbar-width: thin;
   scrollbar-color: var(--primary) rgba(0,0,0,0.1);
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Cambiado a auto para movimiento más fluido */
   position: relative;
   cursor: grab;
   will-change: scroll-position; /* Optimización para animación */
-  flex: 1;
 }
 
 .week-grid:active {
@@ -2083,61 +2112,6 @@ section {
   white-space: nowrap;
 }
 
-/* Flechas del carrusel */
-.carousel-arrow {
-  position: relative;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: var(--bg-card);
-  border: 2px solid var(--primary);
-  color: var(--primary);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  transition: var(--transition-fast);
-  box-shadow: var(--shadow-sm);
-  flex-shrink: 0;
-  z-index: 10;
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-
-.carousel-arrow:hover {
-  background: var(--gradient-primary);
-  color: white;
-  border-color: transparent;
-  transform: scale(1.1);
-  box-shadow: var(--shadow-md);
-}
-
-.carousel-arrow:active {
-  transform: scale(0.95);
-}
-
-.carousel-arrow:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.carousel-arrow[disabled] {
-  opacity: 0.4;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-.carousel-arrow-left {
-  left: 0;
-}
-
-.carousel-arrow-right {
-  right: 0;
-}
-
 @media (max-width: 1200px) {
   .week-grid { 
     gap: 0.75rem;
@@ -2156,16 +2130,6 @@ section {
   .day-column {
     min-width: 160px;
   }
-  
-  .carousel-arrow {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
-  }
-  
-  .carousel-wrapper {
-    gap: 0.5rem;
-  }
 }
 
 @media (max-width: 480px) {
@@ -2175,12 +2139,6 @@ section {
   
   .day-column {
     min-width: 140px;
-  }
-  
-  .carousel-arrow {
-    width: 35px;
-    height: 35px;
-    font-size: 0.9rem;
   }
 }
 

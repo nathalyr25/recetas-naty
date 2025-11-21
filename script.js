@@ -2313,7 +2313,7 @@ window.toggleDaySection = toggleDaySection;
 
 // Función para movimiento automático del carrusel
 function initCarouselAutoScroll() {
-    const weekGrid = document.getElementById('week-grid') || document.querySelector('.week-grid');
+    const weekGrid = document.querySelector('.week-grid');
     if (!weekGrid) {
         // Reintentar después de un breve delay
         setTimeout(initCarouselAutoScroll, 500);
@@ -2329,12 +2329,6 @@ function initCarouselAutoScroll() {
     let lastScrollTime = Date.now();
     let userScrollPosition = 0;
     
-    // Guardar instancia para control desde las flechas
-    const instance = {
-        isPaused: false,
-        setPaused: (value) => { isPaused = value; }
-    };
-    carouselAutoScrollInstance = instance;
     
     function getMaxScroll() {
         const max = weekGrid.scrollWidth - weekGrid.clientWidth;
@@ -2342,7 +2336,7 @@ function initCarouselAutoScroll() {
     }
     
     function autoScroll() {
-        if (isPaused || isUserInteracting || instance.isPaused) {
+        if (isPaused || isUserInteracting) {
             animationId = requestAnimationFrame(autoScroll);
             return;
         }
@@ -2404,26 +2398,22 @@ function initCarouselAutoScroll() {
     // Pausar cuando el usuario pasa el mouse
     weekGrid.addEventListener('mouseenter', () => {
         isPaused = true;
-        instance.isPaused = true;
     });
     
     weekGrid.addEventListener('mouseleave', () => {
         isPaused = false;
-        instance.isPaused = false;
     });
     
     // Pausar cuando el usuario toca (móvil)
     let touchStartX = 0;
     weekGrid.addEventListener('touchstart', (e) => {
         isPaused = true;
-        instance.isPaused = true;
         touchStartX = e.touches[0].clientX;
     });
     
     weekGrid.addEventListener('touchend', () => {
         setTimeout(() => {
             isPaused = false;
-            instance.isPaused = false;
         }, 2000);
     });
     
@@ -2451,161 +2441,12 @@ function initCarouselAutoScroll() {
     }
 }
 
-// Variable global para controlar el movimiento automático desde las flechas
-let carouselAutoScrollInstance = null;
-
-// Función para inicializar las flechas del carrusel
-function initCarouselArrows() {
-    const weekGrid = document.getElementById('week-grid') || document.querySelector('.week-grid');
-    const arrowLeft = document.getElementById('carousel-arrow-left');
-    const arrowRight = document.getElementById('carousel-arrow-right');
-    
-    if (!weekGrid || !arrowLeft || !arrowRight) {
-        setTimeout(initCarouselArrows, 500);
-        return;
-    }
-    
-    // Función para actualizar el estado de las flechas
-    function updateArrowVisibility() {
-        const maxScroll = weekGrid.scrollWidth - weekGrid.clientWidth;
-        const currentScroll = weekGrid.scrollLeft;
-        
-        // Mostrar/ocultar flechas según la posición
-        if (maxScroll <= 0) {
-            arrowLeft.style.display = 'none';
-            arrowRight.style.display = 'none';
-            return;
-        }
-        
-        arrowLeft.style.display = 'flex';
-        arrowRight.style.display = 'flex';
-        
-        // Deshabilitar flecha izquierda si está al inicio
-        if (currentScroll <= 5) {
-            arrowLeft.disabled = true;
-            arrowLeft.style.opacity = '0.4';
-            arrowLeft.style.pointerEvents = 'none';
-        } else {
-            arrowLeft.disabled = false;
-            arrowLeft.style.opacity = '1';
-            arrowLeft.style.pointerEvents = 'auto';
-        }
-        
-        // Deshabilitar flecha derecha si está al final
-        if (currentScroll >= maxScroll - 5) {
-            arrowRight.disabled = true;
-            arrowRight.style.opacity = '0.4';
-            arrowRight.style.pointerEvents = 'none';
-        } else {
-            arrowRight.disabled = false;
-            arrowRight.style.opacity = '1';
-            arrowRight.style.pointerEvents = 'auto';
-        }
-    }
-    
-    // Función para desplazar el carrusel
-    function scrollCarousel(direction) {
-        // Pausar movimiento automático temporalmente
-        if (carouselAutoScrollInstance && carouselAutoScrollInstance.setPaused) {
-            carouselAutoScrollInstance.setPaused(true);
-        }
-        
-        const scrollAmount = weekGrid.clientWidth * 0.75; // Desplazar 75% del ancho visible
-        const currentScroll = weekGrid.scrollLeft;
-        let targetScroll;
-        
-        if (direction === 'left') {
-            targetScroll = Math.max(0, currentScroll - scrollAmount);
-        } else {
-            const maxScroll = weekGrid.scrollWidth - weekGrid.clientWidth;
-            targetScroll = Math.min(maxScroll, currentScroll + scrollAmount);
-        }
-        
-        // Usar scrollTo con smooth para animación
-        if (weekGrid.scrollTo) {
-            weekGrid.scrollTo({
-                left: targetScroll,
-                behavior: 'smooth'
-            });
-        } else {
-            // Fallback para navegadores antiguos
-            weekGrid.scrollLeft = targetScroll;
-        }
-        
-        // Actualizar estado de flechas después de un breve delay
-        setTimeout(updateArrowVisibility, 100);
-        setTimeout(updateArrowVisibility, 500);
-        
-        // Reanudar movimiento automático después de 3 segundos
-        setTimeout(() => {
-            if (carouselAutoScrollInstance && carouselAutoScrollInstance.setPaused) {
-                carouselAutoScrollInstance.setPaused(false);
-            }
-        }, 3000);
-    }
-    
-    // Event listeners para las flechas - usando onclick para mayor compatibilidad
-    arrowLeft.onclick = function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        scrollCarousel('left');
-        return false;
-    };
-    
-    arrowRight.onclick = function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        scrollCarousel('right');
-        return false;
-    };
-    
-    // También agregar addEventListener como respaldo
-    arrowLeft.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        scrollCarousel('left');
-    }, { once: false });
-    
-    arrowRight.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        scrollCarousel('right');
-    }, { once: false });
-    
-    // Actualizar visibilidad de flechas al hacer scroll
-    weekGrid.addEventListener('scroll', updateArrowVisibility);
-    
-    // Actualizar visibilidad al redimensionar la ventana
-    window.addEventListener('resize', () => {
-        setTimeout(updateArrowVisibility, 100);
-    });
-    
-    // Actualizar visibilidad inicial con múltiples intentos
-    setTimeout(updateArrowVisibility, 100);
-    setTimeout(updateArrowVisibility, 500);
-    setTimeout(updateArrowVisibility, 1000);
-    setTimeout(updateArrowVisibility, 2000);
-}
 
 // Inicializar carrusel cuando el DOM esté listo
-function initializeCarousel() {
-    // Inicializar movimiento automático
-    initCarouselAutoScroll();
-    
-    // Inicializar flechas con múltiples intentos para asegurar que funcione
-    initCarouselArrows();
-    
-    // Reintentar inicialización de flechas después de que todo esté cargado
-    window.addEventListener('load', () => {
-        setTimeout(initCarouselArrows, 500);
-        setTimeout(initCarouselArrows, 1500);
-    });
-}
-
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(initializeCarousel, 500);
+        setTimeout(initCarouselAutoScroll, 1000);
     });
 } else {
-    setTimeout(initializeCarousel, 500);
+    setTimeout(initCarouselAutoScroll, 1000);
 }
